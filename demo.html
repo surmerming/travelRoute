@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>demo</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
+    <script type="text/javascript">
+        $.ajax({
+            type: 'POST',
+            dataType: 'jsonp',
+            url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+            data: {
+                input: '厦门',
+                types:'(cities)',
+                language:'zh_CN',
+                key:'AIzaSyBJeZAeODWfLv4XWUmLINM35pL8ADwZ_gY',
+                sensor: false
+            },
+            jsonp: cb,
+            success: function(msg, textStatus){
+                console.log("suceess");
+            },
+            error: function(json){
+                console.log("err");
+                console.log(json.success());
+            },
+            complete: function(msg, textStatus){
+                console.log(msg);
+                console.log(textStatus);
+            }
+        });
+
+        function cb(){
+            console.log("dfdf");
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
