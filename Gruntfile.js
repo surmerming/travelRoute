@@ -28,19 +28,20 @@ module.exports = function (grunt) {
             }
         },
         less: {
-            development: {
-                options: {
-                    paths: []
-                },
-                files: {
-                    "master/css/result.css": "dev/less/source.less"
-                }
+            compile: {
+                files:[{
+                    expand:true,
+                    cwd:'./dev/less/',
+                    src: './*.less',
+                    ext:'.css',
+                    dest:'./master/css/'
+                }]
             }
         },
         coffee: {
             compile: {
                 files: {
-                    'master/js/result.js': 'dev/coffee/source.coffee' // 1:1 compile
+                    'master/js/demo.js': 'dev/coffee/demo.coffee' // 1:1 compile
                 }
             }
         }
@@ -52,6 +53,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-coffee');
 
-    grunt.registerTask('build', ['build', 'less']);
+    grunt.registerTask('default', ['watch','less','coffee']);
+
+    grunt.registerTask('build', ['less', 'coffee']);
 
 };

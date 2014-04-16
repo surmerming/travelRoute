@@ -1,7 +1,10 @@
 html,body{
-    font-family: Helvetica,Tahoma,Arial,"Microsoft YaHei","微软雅黑",SimSun,"宋体",Heiti,"黑体",sans-serif;
-    font-size: 12px;
-    margin: 0px;
-    padding: 0px;
-    height: 100%;
+     font-family: "微软雅黑",Helvetica,Tahoma,Arial,"Microsoft YaHei",SimSun,"宋体",Heiti,"黑体",sans-serif;
+     font-size: 12px;
+     margin: 0px;
+     padding: 0px;
+     height: 100%;
+ }
+input{
+    padding: 5px;
 }

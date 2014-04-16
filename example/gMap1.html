@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>google new</title>
+    <script  type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI9shlGLFnzSRPX8Cd3F6BSHVnwdGxRRc&sensor=true"></script>
+</head>
+<script type="text/javascript">
+    function initialize(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(updateLocation,error,{enableHighAccuracy:true, maximumAge:100});
+        }
+        else{alert("your browser is not support html5!")}
+
+        function updateLocation(position){
+            var lat=position.coords.latitude;
+            var lng=position.coords.longitude;//获取当前位置经纬度
+            var point1=google.maps.LatLng(lat,lng);
+//            var point1=google.maps.LatLng(22.530391,114.120087);
+            var point2=google.maps.LatLng(22.550391,114.120087);
+            var mapOptions = {
+                zoom: 15,
+                center: point1,
+                panControl: false,
+                zoomControl: false,
+                scaleControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }  //设置地图选项
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); //新建地图对象，初始化地图
+
+            var marker1 = new google.maps.Marker({
+                position: point1,
+                map: map,
+                title: 'Hello World!'
+            });  //添加标记
+
+            //添加自定义标签
+
+            /*	function MyControl(controlDiv,map){
+             controlDiv.style.paddding="3px";
+             controlDiv.style.innerHTML="danhang";
+             google.maps.event.addDomListener(controlDiv, 'click', function() {
+             alert("you did it!")
+             })
+
+             }
+             var homeControlDiv = document.createElement('div');
+             var homeControl = new MyControl(homeControlDiv, map);
+             homeControlDiv.index = 1;
+             map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+             */
+            //--------------------------------------------------------------------
+
+
+            //获取路径
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+            var request = {
+                origin:point1,
+                destination:point2,
+                travelMode: google.maps.DirectionsTravelMode.DRIVING  //驾车路径
+                //travelMode: google.maps.DirectionsTravelMode.WALKING  //步行路径
+            };
+            directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+        }
+        function error(){ alert("please try again!")}
+    }
+
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>

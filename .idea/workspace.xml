@@ -2,31 +2,57 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34d1a0a6-f895-43da-a0ab-b5d79552674b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gruntfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/css/base.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev/coffee/demo.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev/less/demo.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/js/loadMaps.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/css/map.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/js/baiduApi.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/js/calc.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/view/demo.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/gMap.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/gMap1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/js/init.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/js/map.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/js/renderControl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master/view/searchAdd.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/suggest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/viaPoint.html" />
+      <change type="DELETED" beforePath="E:\project\web\TravelRoute\travelRoute\master\js\config.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\project\web\TravelRoute\travelRoute\master\js\loadMaps.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gruntfile.js" afterPath="$PROJECT_DIR$/Gruntfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/css/base.css" afterPath="$PROJECT_DIR$/master/css/base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/coffee/demo.coffee" afterPath="$PROJECT_DIR$/dev/coffee/demo.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo.html" afterPath="$PROJECT_DIR$/demo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/less/demo.less" afterPath="$PROJECT_DIR$/dev/less/demo.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/css/map.css" afterPath="$PROJECT_DIR$/master/css/map.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/grunt-contrib-copy/package.json" afterPath="$PROJECT_DIR$/node_modules/grunt-contrib-copy/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/grunt-contrib-less/node_modules/less/node_modules/clean-css/package.json" afterPath="$PROJECT_DIR$/node_modules/grunt-contrib-less/node_modules/less/node_modules/clean-css/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/grunt-contrib-watch/package.json" afterPath="$PROJECT_DIR$/node_modules/grunt-contrib-watch/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/grunt-contrib-watch/node_modules/gaze/package.json" afterPath="$PROJECT_DIR$/node_modules/grunt-contrib-watch/node_modules/gaze/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/grunt-contrib-watch/node_modules/tiny-lr-fork/package.json" afterPath="$PROJECT_DIR$/node_modules/grunt-contrib-watch/node_modules/tiny-lr-fork/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master/js/util.js" afterPath="$PROJECT_DIR$/master/js/util.js" />
     </list>
     <ignored path="travelRoute.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396713422813" ignored="false" />
-    <file path="/Gruntfile.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396704973803" ignored="false" />
-    <file path="/demo.less" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396702845489" ignored="false" />
-    <file path="/demo.coffee" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396703420302" ignored="false" />
-    <file path="/base.css" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396705207655" ignored="false" />
-    <file path="/index.html" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396713867009" ignored="false" />
+    <file path="/Dummy.txt" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397602948685" ignored="false" />
+    <file path="/Gruntfile.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396773766266" ignored="false" />
+    <file path="/demo.less" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396769279339" ignored="false" />
+    <file path="/demo.coffee" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396769400918" ignored="false" />
+    <file path="/base.css" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397481926550" ignored="false" />
+    <file path="/index.html" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397649518388" ignored="false" />
     <file path="$PROJECT_DIR$/../../tracePlan/route.html" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396712098738" ignored="false" />
     <file path="/config.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396713333860" ignored="false" />
-    <file path="/util.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396717645914" ignored="false" />
-    <file path="/loadMaps.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396719346559" ignored="false" />
+    <file path="/util.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397607455253" ignored="false" />
+    <file path="/loadMaps.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397480592219" ignored="false" />
     <file path="C:/wamp/www/v2_test/js/lib/lib.swfupload.speed.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396714252425" ignored="false" />
     <file path="/lib.swfupload.speed.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396714252425" ignored="false" />
     <file path="/a.dummy" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396714257351" ignored="false" />
-    <file path="/demo.html" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396720944279" ignored="false" />
+    <file path="/demo.html" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396872794054" ignored="false" />
+    <file path="/demo2.less" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396773974712" ignored="false" />
+    <file path="/README.md" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1396877343472" ignored="false" />
+    <file path="/init.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397607297582" ignored="false" />
+    <file path="/map.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397652483859" ignored="false" />
+    <file path="/calc.js" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397650647707" ignored="false" />
+    <file path="/gMap.html" changelist="34d1a0a6-f895-43da-a0ab-b5d79552674b" time="1397614387411" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +67,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -77,7 +104,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -87,15 +113,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="init.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/master/js/init.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="54" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="284" selection-end="460" vertical-scroll-proportion="-6.107143">
+            <state line="26" column="51" selection-start="1037" selection-end="1037" vertical-scroll-proportion="-13.821428">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="map.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/master/js/map.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="190" column="8" selection-start="5564" selection-end="5564" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="baiduApi.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/master/js/baiduApi.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1397374056091" expanded="false" signature="14881:14966" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="15012:15068" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="15113:15170" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="16043:16086" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="16212:16248" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="16411:16422" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="17645:17690" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="17845:17908" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="18006:18091" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="18158:18193" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="25086:25124" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="25185:25261" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="30980:30995" placeholder="..." />
+                <marker date="1397374056091" expanded="false" signature="31028:31043" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calc.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/master/js/calc.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="45" selection-start="585" selection-end="585" vertical-scroll-proportion="0.44145873">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -103,52 +176,7 @@
       <file leaf-file-name="util.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/master/js/util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="31" selection-start="950" selection-end="950" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master/js/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="59" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="loadMaps.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master/js/loadMaps.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="17" selection-start="1157" selection-end="1824" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="demo.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/demo.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="53" selection-start="537" selection-end="537" vertical-scroll-proportion="0.27087575">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master/css/base.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="17" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="map.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master/css/map.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="4" selection-start="111" selection-end="111" vertical-scroll-proportion="0.0">
+            <state line="88" column="64" selection-start="2277" selection-end="2277" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -172,17 +200,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/dev/less/demo.less" />
-        <option value="$PROJECT_DIR$/dev/coffee/demo.coffee" />
-        <option value="$PROJECT_DIR$/Gruntfile.js" />
-        <option value="$PROJECT_DIR$/master/css/map.css" />
-        <option value="$PROJECT_DIR$/master/css/base.css" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/master/js/baiduApi.js" />
         <option value="$PROJECT_DIR$/master/js/config.js" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/master/js/util.js" />
+        <option value="$PROJECT_DIR$/master/css/map.css" />
         <option value="$PROJECT_DIR$/master/js/loadMaps.js" />
-        <option value="$PROJECT_DIR$/demo.html" />
+        <option value="$PROJECT_DIR$/master/css/base.css" />
+        <option value="$PROJECT_DIR$/master/js/domControl.js" />
+        <option value="$PROJECT_DIR$/master/view/searchAdd.html" />
+        <option value="$PROJECT_DIR$/example/viaPoint.html" />
+        <option value="$PROJECT_DIR$/master/js/init.js" />
+        <option value="$PROJECT_DIR$/master/js/util.js" />
+        <option value="$PROJECT_DIR$/example/gMap.html" />
+        <option value="$PROJECT_DIR$/example/gMap1.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/master/js/calc.js" />
+        <option value="$PROJECT_DIR$/master/js/map.js" />
       </list>
     </option>
   </component>
@@ -190,8 +223,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1318" />
-    <option name="height" value="784" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -221,8 +254,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -255,6 +288,116 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="less" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="coffee" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelRoute" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -266,17 +409,17 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="preferences.externalTools" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -291,19 +434,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -334,6 +464,19 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -347,13 +490,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -377,6 +513,13 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <list size="0" />
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -392,35 +535,55 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1318" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.06759099" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11183144" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35121107" sideWeight="0.3770865" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6828423" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14194578" sideWeight="0.8881686" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11183144" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22003035" sideWeight="0.4800693" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11183144" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.51993066" sideWeight="0.6221548" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -484,90 +647,113 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="24" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/nav_btn_loc_3d_pressed.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dev/coffee/demo.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/nav_btn_loc_3d_normal.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="32" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/nav_btn_loc_2d_pressed.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dev/less/demo.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="17" selection-start="23" selection-end="23" vertical-scroll-proportion="0.04935065">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/nav_btn_loc_2d_normal.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="32" selection-start="385" selection-end="385" vertical-scroll-proportion="0.74509805">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/icon_marke.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master/css/map.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="4" selection-start="111" selection-end="111" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/icon_focus_marka.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/assets/images/nav_btn_more_poi.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master/js/config.js">
+    <entry file="file://$PROJECT_DIR$/assets/images/nav_btn_more_set_end.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/gMap.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="59" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+        <state line="42" column="64" selection-start="1687" selection-end="1687" vertical-scroll-proportion="1.2366863">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/master/js/util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="31" selection-start="950" selection-end="950" vertical-scroll-proportion="0.0">
+        <state line="88" column="64" selection-start="2277" selection-end="2277" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master/js/loadMaps.js">
+    <entry file="file://$PROJECT_DIR$/example/gMap1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="17" selection-start="1157" selection-end="1824" vertical-scroll-proportion="0.0">
+        <state line="20" column="14" selection-start="924" selection-end="924" vertical-scroll-proportion="-1.2859961">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="284" selection-end="460" vertical-scroll-proportion="-6.107143">
+        <state line="26" column="51" selection-start="1037" selection-end="1037" vertical-scroll-proportion="-13.821428">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master/js/init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="54" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master/js/baiduApi.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1397374056091" expanded="false" signature="14881:14966" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="15012:15068" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="15113:15170" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="16043:16086" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="16212:16248" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="16411:16422" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="17645:17690" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="17845:17908" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="18006:18091" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="18158:18193" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="25086:25124" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="25185:25261" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="30980:30995" placeholder="..." />
+            <marker date="1397374056091" expanded="false" signature="31028:31043" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demo.html">
+    <entry file="file://$PROJECT_DIR$/master/js/map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="53" selection-start="537" selection-end="537" vertical-scroll-proportion="0.27087575">
+        <state line="190" column="8" selection-start="5564" selection-end="5564" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master/js/calc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="45" selection-start="585" selection-end="585" vertical-scroll-proportion="0.44145873">
           <folding />
         </state>
       </provider>

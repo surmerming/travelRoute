@@ -1,25 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Draggable directions</title>
-
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>基于百度地图的旅行路径规划</title>
     <link rel="stylesheet" href="master/css/base.css" />
     <link rel="stylesheet" href="master/css/map.css" />
-    <script src="lib/jquery-2.1.0.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJeZAeODWfLv4XWUmLINM35pL8ADwZ_gY&sensor=true"></script>
-    <script src="master/js/config.js"></script>
-    <script src="master/js/util.js"></script>
-    <script src="master/js/loadMaps.js"></script>
+
 </head>
+
 <body>
-<div id="mapCanvas"></div>
+<div id="mapContainer"></div>
 <div id="searchPanel">
-    <div style="padding: 10px;">
-        <p style="font-size: 16px;font-weight: bold;color: #7B7B70;">添加城市</p>
-        <div style=""><input type="text" placeholder="城市" style="padding: 5px;"></div>
+    <div class="addInput">
+        <input type="text" placeholder="城市" class="searchText" id="cityInput1" size="40px" value="福建省厦门市"  />
+        <input type="button" class="btnAdd" value="添加" />
+    </div>
+    <div class="addInput">
+        <input type="text" placeholder="城市" class="searchText" id="cityInput2" size="40px" value="福建省泉州市" />
+        <input type="button" class="btnAdd" value="添加" />
+    </div>
+    <div class="addInput">
+        <input type="text" placeholder="城市" class="searchText" id="cityInput3" size="40px" value="福建省莆田市" />
+        <input type="button" class="btnAdd" value="添加" />
+    </div>
+    <div class="addInput">
+        <input type="text" placeholder="城市" class="searchText" id="cityInput4" size="40px" value="福建省福州市" />
+        <input type="button" class="btnAdd" value="添加" />
+    </div>
+    <div>
+        <select name="selStrategy" id="selStrategy">
+            <option value="0">最小时间</option>
+            <option value="1">最短距离</option>
+            <option value="2">不走高速</option>
+        </select>
+    </div>
+    <input class="btnSearch" type="button" value="查询" />
+    <div id="searchResult">
     </div>
 </div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=lGv0D1ipAA9UeVtQXsFQpTsU"></script>
+<script type="text/javascript" src="lib/head.js"></script>
+<script type="text/javascript" src="master/js/init.js"></script>
 </body>
-</html>
+</html> 
