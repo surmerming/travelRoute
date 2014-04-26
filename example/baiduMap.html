@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>驾车导航</title>
+    <!--<script src="http://api.map.baidu.com/api?v=1.2"></script>-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=lGv0D1ipAA9UeVtQXsFQpTsU"></script>
+
+</head>
+<body>
+<div id="container" style="width:400px;height:248px"></div>
+<div id="panel" style="position:absolute;left:420px;top:10px"></div>
+<script>
+    var map =new BMap.Map('container');
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+    var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+
+    var driving =new BMap.DrivingRoute(map, {
+        policy: routePolicy[0],
+        onSearchComplete: function(results){
+            if (driving.getStatus() == BMAP_STATUS_SUCCESS) {
+                // 添加覆盖层
+                addOverlays(results);
+                // 添加文字
+                addText(results);
+            }
+        }
+    });
+
+    driving.search('圆明园', '西单');
+
+    // 添加覆盖层
+    function addOverlays(results) {
+
+        var start = results.getStart();
+        var end = results.getEnd();
+        addStart(start.point, start.title);
+        addEnd(end.point, end.title);
+        var viewPoints = [start.point, end.point];
+        var plan = results.getPlan(0);
+
+        for (var i =0; i < plan.getNumRoutes(); i ++) {
+            addRoute(plan.getRoute(i).getPath());
+            viewPoints.concat(plan.getRoute(i).getPath());
+        }
+        map.setViewport(viewPoints, {
+            margins: [40, 10, 10, 10]
+        });
+    }
+
+
+    function addText(results) {
+        var plan = results.getPlan(0);
+
+        var htmls = [];
+        for (var i =0; i < plan.getNumRoutes(); i ++) {
+            var route = plan.getRoute(i);
+            for (var j =0; j < route.getNumSteps(); j ++) {
+                var curStep = route.getStep(j);
+                htmls.push((j +1) +'. '+ curStep.getDescription() +'<br />');
+            }
+        }
+        var panel = document.getElementById('panel');
+        panel.innerHTML = htmls.join('');
+        panel.style.lineHeight ='1.4em';
+        panel.style.fontSize ='12px';
+    }
+
+    function addStart(point, title){
+        map.addOverlay(new BMap.Marker(point, {
+            title: title,
+            icon: new BMap.Icon('../assets/images/icon_markf.png', new BMap.Size(38, 41), {
+                anchor: new BMap.Size(4, 36)
+            })}));
+    }
+
+    function addEnd(point, title){
+        map.addOverlay(new BMap.Marker(point, {
+            title: title,
+            icon: new BMap.Icon('../assets/images/icon_markf.png', new BMap.Size(38, 41), {
+                anchor: new BMap.Size(4, 36)
+            })}));
+    }
+
+    function addRoute(path){
+        map.addOverlay(new BMap.Polyline(path, {
+            strokeColor: '#333',
+            enableClicking: false
+        }));
+    }
+</script>
+</body>
+</html>

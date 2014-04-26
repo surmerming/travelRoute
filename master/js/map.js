@@ -1,18 +1,15 @@
-
-
-
 TravelRoute.Map = {
     map: {},
     point: {},
     util: {},
     marker: {},
+    objArr: [],
 
     initialize: function(){
         var self = this;
 
         // util
         self.util = TravelRoute.Util;
-
         //首先呈现的界面
        self.originPresentation();
         // localCity居中显示
@@ -31,7 +28,7 @@ TravelRoute.Map = {
 
     // 加载地图首先展示的页面
     originPresentation: function(){
-        this.map = new BMap.Map("mapContainer");
+        this.map = new BMap.Map("t_map_container");
         this.point = new BMap.Point(116.404, 39.915);
         this.map.centerAndZoom(this.point,12);
 
@@ -77,8 +74,10 @@ TravelRoute.Map = {
         return document.getElementById(div);
     },
 
-    suggestEvent: function(inputId){
+    // 搜索提示
+    doSearchSuggest: function(inputId){
         var self = this;
+
 
         // 设置地点
         var setPlace = function(){
@@ -101,7 +100,7 @@ TravelRoute.Map = {
 
         var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
             {
-                "input": inputId,
+                "input": "t_search_input",
                 "location": "全国"
             }
         );
@@ -153,18 +152,6 @@ TravelRoute.Map = {
         }
     },
 
-    // 添加搜索提示
-    addSuggestEvent: function(){
-        var searchText = $('.searchText');
-        var cnt = searchText.length;
-        var i = 0;
-        var inputId = "";
-        for( ; i<cnt; i++){
-            inputId = $(searchText[i]).attr('id');
-            this.suggestEvent(inputId);
-        }
-    },
-
     addDrivingRoute: function(){
         var self = this;
         var transitSearch = function(start, end){
@@ -194,17 +181,17 @@ TravelRoute.Map = {
     },
 
     // 根据不同策略选择的驾车方式
-    selStrategyDrive: function(arrPlace, value){
+    selStrategyDrive: function(arrPlace, opt){
         var self = this;
         var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
         arrPlace = self.util.trimArray(arrPlace);
-        var len = arrPlace.length;
-        var arrObj = [];
         self.map.clearOverlays();
-        var resultsObj = [];
+        var arrayEdge = new Array();
+        var arrLen = arrPlace.length;
+
         var beginSearch = function(start, end){
             //三种驾车策略：最少时间，最短距离，避开高速
-            search(start,end,routePolicy[value]); //最少时间
+            search(start,end,routePolicy[opt]); //最少时间
             function search(start,end,route){
                 var transit = new BMap.DrivingRoute(self.map,
                     {
@@ -216,21 +203,26 @@ TravelRoute.Map = {
                         onSearchComplete: function(results){
                             console.log("onSearchComplete...");
                             console.log(results);
-                            if (transit.getStatus() != BMAP_STATUS_SUCCESS){
-                                return ;
-                            }
-                            var plan = results.getPlan(0);
-                            var start = results.getStart().city;
-                            var end = results.getEnd().city;
-                            var distance = plan.getDistance(false);
-                            var time = plan.getDuration(false);
-                            var weight = (value!=0 ? distance : time);
-                            arrObj.push({start:start,end:end,weight:weight});
-                            if(arrObj.length == (len*(len-1)/2)){
-                                console.log(arrObj);
-                                resultsObj = TravelRoute.Calc.startCalc(arrObj);
+                            if (transit.getStatus() == BMAP_STATUS_SUCCESS){
+                                var plan = results.getPlan(0);
+                                var start = results.getStart().city;
+                                var end = results.getEnd().city;
+                                var distance = plan.getDistance(false);
+                                var time = plan.getDuration(false);
+                                //self.addOverlay(results);
+                                //self.addText(results);
 
+                                var value = (value!=0 ? distance : time);
+                                arrayEdge.push(new Edge(start, end, value));
+
+                                if(arrayEdge.length == (arrLen*(arrLen-1)/2)){
+                                    TravelRoute.Calc.init("厦门","长沙",arrayEdge);
+                                    var routeResults = TravelRoute.Calc.showCalResults();
+                                    console.log("oYe");
+                                    console.log(routeResults);
+                                }
                             }
+
                         },
                         policy: route
                     }
@@ -262,43 +254,190 @@ TravelRoute.Map = {
         return arrContent;
     },
 
+    // 添加右键菜单
+    addContextMenu: function(){
+        var self = this;
+        var contextMenu = new BMap.ContextMenu();
+        var txtMenuItem = [
+            {
+                text:'放大',
+                callback:function(){self.map.zoomIn()}
+            },
+            {
+                text:'缩小',
+                callback:function(){self.map.zoomOut()}
+            },
+            {
+                text:'放置到最大级',
+                callback:function(){self.map.setZoom(18)}
+            },
+            {
+                text:'查看全国',
+                callback:function(){self.map.setZoom(4)}
+            },
+            {
+                text:'在此添加标注',
+                callback:function(p){
+                    var marker = new BMap.Marker(p),
+                        px = self.map.pointToPixel(p);
+                    self.map.addOverlay(marker);
+                }
+            }
+        ];
+
+
+        for(var i=0; i < txtMenuItem.length; i++){
+            contextMenu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
+            if(i==1 || i==3) {
+                contextMenu.addSeparator();
+            }
+        }
+        self.map.addContextMenu(contextMenu);
+    },
+
     // 运行时对DOM的修改
     runChange: function(){
         var self = this;
 
-        var $addInput = $('.addInput');
+        // 搜索提示
+        self.doSearchSuggest();
 
-        self.addSuggestEvent();
+        // 添加右键菜单
+        self.addContextMenu();
 
+        var curStrategy = 0;
 
-
-
-//        self.suggestEvent();
-
-        $addInput.on("click", ".btnAdd", function(){
-            //增加旅游点
-            var $tpl = self.util.getTemplate("view", "searchAdd");
-            var $addBtn = $(this).clone();
-            console.log($addBtn);
-
-            $tpl.insertBefore($addInput);
-//            $(this).remove();
-            /*var $input = $addBtn.insertAfter($addInput);
-            $addBtn.insertAfter($input);*/
+        // 策略选择项
+        $('.t_select_name').on("change", function(){
+            curStrategy = $(this).val();
         });
 
-        var $selStrategy = $('#selStrategy');
-        var curValue = 0;
-        $selStrategy.on("change", function(){
-            curValue = $selStrategy.val();
+        // 进行DOM操作
+        $('#t_place_add_btn').click(function(){
+            var obj = {};
+            var place = $('#t_search_input').val();
+            if(place != ""){
+                obj.place = place;
+                var $tpl = self.util.getTemplate("view", "placeItem", obj);
+                $("#t_place_area").append($tpl);
+            }
+            return false;
+        });
+        // 取消地点
+        $('#t_place_area').on('click','.t_place_item_cancel',function(){
+            /*var val = $(this).siblings('.t_place_item_content').text();*/
+            $(this).parent().remove();
+        });
+        // 多个地点查询
+        $('#t_btnSearch').click(function(){
+            var liLen = $('#t_place_area').children('li').length;
+            if(liLen<2){
+                alert("请添加多个地点。。。");
+                return false;
+            }else{
+                /*var arrPlace = ["厦门", "泉州", "龙岩", "长沙"];
+                self.selStrategyDrive(arrPlace);*/
+                var $ulPlaces = $('#t_place_area');
+                $ulPlaces.children('')
+            }
         });
 
-        $('.btnSearch').click(function(){
 
-            var arrPlace = self.getInputContent();
-            self.selStrategyDrive(arrPlace, curValue);
+    },
+
+    drivingRoute: function(){
+        var self = this;
+        //三种驾车策略：最少时间，最短距离，避开高速
+        var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+        /*var start = "厦门";
+        var end = "泉州";*/
+
+        var transit = new BMap.DrivingRoute(self.map, {
+            renderOptions: {map: self.map,panel:"searchResult"},
+            policy: routePolicy[0],
+            onSearchComplete: function(results){
+                /*console.log(results);
+                *//*self.addOverlay(results);*//*
+                var plan = results.getPlan(0);
+                var start = results.getStart().city;
+                var end = results.getEnd().city;
+                var distance = plan.getDistance(false);
+                var time = plan.getDuration(false);
+//                var weight = (value!=0 ? distance : time);
+                var weight = distance;
+                self.objArr.push({start:start,end:end,weight:weight});
+
+                self.map.clearOverlays();*/
+                if (transit.getStatus() == BMAP_STATUS_SUCCESS) {
+                    // 添加覆盖层
+                    self.addOverlay(results);
+                    // 添加文字
+                    self.addText(results);
+                }
+
+
+            }
+
         });
+        transit.search(start,end);
+    },
+    // 添加起点
+    addStart: function(point, title){
+        this.map.addOverlay(new BMap.Marker(point, {
+            title: title,
+            icon: new BMap.Icon('assets/images/icon_markf.png', new BMap.Size(38, 41), {
+                anchor: new BMap.Size(4, 36)
+            })}));
 
+    },
+    // 添加终点
+    addEnd: function(point, title){
+        this.map.addOverlay(new BMap.Marker(point, {
+            title: title,
+            icon: new BMap.Icon('assets/images/icon_markf.png', new BMap.Size(38, 41), {
+                anchor: new BMap.Size(4, 36)
+            })}));
+    },
+    // 添加覆盖层
+    addOverlay: function(results){
+        var start = results.getStart();
+        var end = results.getEnd();
+        this.addStart(start.point, start.title);
+        this.addEnd(end.point, end.title);
+        var viewPoints = [start.point, end.point];
+        var plan = results.getPlan(0);
+
+        for (var i =0; i < plan.getNumRoutes(); i ++) {
+            this.addRoute(plan.getRoute(i).getPath());
+            viewPoints.concat(plan.getRoute(i).getPath());
+        }
+        this.map.setViewport(viewPoints, {
+            margins: [40, 10, 10, 10]
+        });
+    },
+    // 添加文字
+    addText: function(results){
+        var plan = results.getPlan(0);
+
+        var htmls = [];
+        for (var i =0; i < plan.getNumRoutes(); i ++) {
+            var route = plan.getRoute(i);
+            for (var j =0; j < route.getNumSteps(); j ++) {
+                var curStep = route.getStep(j);
+                htmls.push((j +1) +'. '+ curStep.getDescription() +'<br />');
+            }
+        }
+        var panel = document.getElementById('panel');
+        panel.innerHTML = htmls.join('');
+        panel.style.lineHeight ='1.4em';
+        panel.style.fontSize ='12px';
+    },
+
+    addRoute: function(path){
+       this.map.addOverlay(new BMap.Polyline(path, {
+            strokeColor: '#333',
+            enableClicking: false
+        }));
     }
 
 };

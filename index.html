@@ -10,33 +10,29 @@
 </head>
 
 <body>
-<div id="mapContainer"></div>
-<div id="searchPanel">
-    <div class="addInput">
-        <input type="text" placeholder="城市" class="searchText" id="cityInput1" size="40px" value="福建省厦门市"  />
-        <input type="button" class="btnAdd" value="添加" />
-    </div>
-    <div class="addInput">
-        <input type="text" placeholder="城市" class="searchText" id="cityInput2" size="40px" value="福建省泉州市" />
-        <input type="button" class="btnAdd" value="添加" />
-    </div>
-    <div class="addInput">
-        <input type="text" placeholder="城市" class="searchText" id="cityInput3" size="40px" value="福建省莆田市" />
-        <input type="button" class="btnAdd" value="添加" />
-    </div>
-    <div class="addInput">
-        <input type="text" placeholder="城市" class="searchText" id="cityInput4" size="40px" value="福建省福州市" />
-        <input type="button" class="btnAdd" value="添加" />
-    </div>
-    <div>
-        <select name="selStrategy" id="selStrategy">
-            <option value="0">最小时间</option>
-            <option value="1">最短距离</option>
-            <option value="2">不走高速</option>
-        </select>
-    </div>
-    <input class="btnSearch" type="button" value="查询" />
-    <div id="searchResult">
+<div id="t_map_container"></div>
+<div id="t_right_zone">
+    <div id="t_right_zone_content">
+        <div class="t_mode_options">
+            <select class="t_select_name">
+                <option value="0">最小时间</option>
+                <option value="1">最短距离</option>
+                <option value="2">避开高速</option>
+            </select>
+        </div>
+        <div class="t_search_add">
+            <input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/>
+            <input type="button" id="t_place_add_btn" value="添加" />
+        </div>
+        <div id="t_place">
+            <ul id="t_place_area">
+            </ul>
+        </div>
+        <div id="t_search">
+            <input id="t_btnSearch" type="button" value="查询" />
+        </div>
+        <!--<div id="searchResult">
+        </div>-->
     </div>
 </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=lGv0D1ipAA9UeVtQXsFQpTsU"></script>

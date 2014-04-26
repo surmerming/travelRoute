@@ -1,9 +1,29 @@
 //优化后的kruskal算法
 
+// 构造边对象，初始化
+var Edge = function(first, second, value){
+    this._first = first;
+    this._second = second;
+    this._value = value;
+};
+
+//得到第一个节点
+Edge.prototype.getFirst = function(){
+    return this._first;
+};
+
+// 得到第二个节点
+Edge.prototype.getSecond = function(){
+    return this._second;
+};
+
+// 得到value值
+Edge.prototype.getValue = function(){
+    return this._value;
+};
 
 
-
-//var TravelRoute = {};
+var TravelRoute = {};
 
 TravelRoute.Calc = {
     /*_arrayEdge: [],         // 按边关系构造的数组
@@ -353,7 +373,7 @@ TravelRoute.Calc = {
 
 }
 
-/*var arrayEdge = new Array();*/
+var arrayEdge = new Array();
 
 /*arrayEdge.push(new Edge("A","B",10));
  arrayEdge.push(new Edge("A","C",15));
@@ -412,7 +432,7 @@ arrayEdge.push(new Edge("I","J",25));
 TravelRoute.Calc.init("A", "C", arrayEdge);
 console.log(TravelRoute.Calc.showCalResults());*/
 
-/*var nodeEdge = [
+var nodeEdge = [
     {
         _first: "A",
         _relations: []
@@ -432,4 +452,4 @@ console.log(TravelRoute.Calc.showCalResults());*/
 ];
 
 
-TravelRoute.Calc.getDegreeCal(nodeEdge);*/
+TravelRoute.Calc.getDegreeCal(nodeEdge);

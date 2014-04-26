@@ -5,6 +5,14 @@ html,body{
      padding: 0px;
      height: 100%;
  }
-input{
-    padding: 5px;
+
+body{
+
 }
+
+ul,li{
+    list-style: none;
+    text-decoration: none;
+    padding: 0px;
+}
+

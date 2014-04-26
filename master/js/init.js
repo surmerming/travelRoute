@@ -3,6 +3,28 @@ var TravelRoute = {};
 
 TravelRoute.Config = {};
 
+// 构造边对象，初始化
+var Edge = function(first, second, value){
+    this._first = first;
+    this._second = second;
+    this._value = value;
+};
+
+//得到第一个节点
+Edge.prototype.getFirst = function(){
+    return this._first;
+};
+
+// 得到第二个节点
+Edge.prototype.getSecond = function(){
+    return this._second;
+};
+
+// 得到value值
+Edge.prototype.getValue = function(){
+    return this._value;
+};
+
 // 加载文件资源
 TravelRoute.FileLists = {
     resources:[

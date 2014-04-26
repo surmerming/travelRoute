@@ -1,10 +1,60 @@
-#mapContainer{
+
+#t_map_container{
     float:left;
     width:70%;
     height:100%
 }
-#searchPanel{
+#t_right_zone{
     float:right;
     width:30%;
     height: 100%
+}
+#t_right_zone_content{
+    padding-right: 5%;
+}
+.t_select_name{
+    padding: 5px;
+}
+.t_search_add{
+
+}
+#t_search_input{
+    margin: 6px 0px;
+    padding: 8px;
+}
+#t_place_add_btn{
+    padding: 8px;
+}
+.t_place_item{
+    padding: 10px;
+    background-color: #cccccc;
+    width: 70%;
+    display: inline-block;
+    font-size: 14px;
+}
+.t_place_item_content{
+    float: left;
+    color: #ffffff;
+}
+.t_place_item_cancel{
+    float: right;
+    padding-right: 5px;
+    color: #dd9664;
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-appearance:none;
+
+}
+.t_place_item_cancel:hover{
+    color: #dd3b37;
+    cursor: pointer;
+}
+#t_btnSearch{
+    padding: 5px 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
