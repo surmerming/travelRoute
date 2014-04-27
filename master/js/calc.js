@@ -1,33 +1,24 @@
-//优化后的kruskal算法
-
-
-
-
-//var TravelRoute = {};
 
 TravelRoute.Calc = {
-    /*_arrayEdge: [],         // 按边关系构造的数组
-    _vertexList: [],        // 节点数组
-    _edgeList: [],          // 边关系数组
-    _start: "",             // 起点
-    _end: "",               // 终点
-    _arrayNode: [],         // 数组节点
-    _mstArrayNode: [],      // 最小生成树后构造的节点*/
 
     _start: "",             // 出发起点
     _end: "",               // 出发终点
+    _bIsSame: false,        // 起点和终点是否一样
     _gbEdgeArr: [],         // 按边保存
     _gbNodeArr: [],         // 按节点保存
     _nodeList: [],          // 临时节点列表
     _edgeList: [],          // 临时边关系列表
     _tspArrayNode: [],      // 旅行商数组节点
+    _tspRoute: [],          // 计算路径
 
     init: function(start, end, edgeArr){
         // 初始化保存起点、终点和各个节点关系图
         this._gbEdgeArr = edgeArr;
         this._start = start;
         this._end = end;
+        this._bIsSame = ((start==end) ? true : false);
         this.startCalc(edgeArr);
+
     },
 
     startCalc: function(edgeArr){
@@ -46,7 +37,6 @@ TravelRoute.Calc = {
             this.sortByValue(nodeArr[i]._relations);
         }
         console.log(nodeArr);
-        TravelRoute.Calc.show();
 
         //最小生成树到旅行商算法
         this.mstTreeToTsp();
@@ -69,11 +59,20 @@ TravelRoute.Calc = {
     //按节点构造对象
     createObjByNode: function(edge, objArr){
         var self = this;
+        // 对象数组不为空
         if(objArr.length > 0){
+            // 遍历对象数组
             for(var i in objArr){
                 var objArrItem = objArr[i];
                 var first = objArrItem._first;
+                // 该节点已经存在
                 if(first && (first == edge._first)){
+                    // 是否已经存在
+                    for(var j in objArrItem._relations){
+                        if((objArrItem._relations[j]._second == edge._second)){
+                            return;
+                        }
+                    }
                     objArrItem._relations.push({_second: edge._second, _value: edge._value});
                     return;
                 }
@@ -152,9 +151,6 @@ TravelRoute.Calc = {
         return item;
     },
 
-    show: function(){
-        console.log(this._edgeList);
-    },
 
     // 根据贪心算法，删除两者之间的联系
     getNodeByGreed: function(mstArrayNode){
@@ -162,12 +158,16 @@ TravelRoute.Calc = {
         console.log(mstArrayNode);
         for(var i in mstArrayNode){
             var mstArrayNodeItem = mstArrayNode[i];
-            if(mstArrayNodeItem._relations.length > 2){
+            if(mstArrayNodeItem._relations.length >= 2){
                 mstArrayNodeItem._relations = self.sortByValue(mstArrayNodeItem._relations);
-                for(var r in mstArrayNodeItem._relations){
+
+                for(var r=0; r<mstArrayNodeItem._relations.length; r++){
                     var nodeRelationsItem = mstArrayNodeItem._relations[r];
-                    if(r>1){
+                    var isStartOrEnd = (mstArrayNodeItem._first==self._start) || (mstArrayNodeItem._first==self._end);
+                    // 当节点不为起点或终点时，保留与两个节点的联系；当节点为起点或终点是，保留一个节点的联系
+                    if(r>1 || (!self._bIsSame&&isStartOrEnd&&r>0)){
                         mstArrayNodeItem._relations.splice(r, 1);
+                        r--;
                         self.removeAnotherEdge(mstArrayNode, mstArrayNodeItem._first, nodeRelationsItem._second);
                     }
                 }
@@ -190,18 +190,35 @@ TravelRoute.Calc = {
         }
     },
 
-    // 计算度为1的节点
+    //节点度的计算
     getDegreeCal: function(mstArrayNode){
         var self = this;
         var zeroDegreeArr = [];
         var oneDegreeArr = [];
-
         for(var i in mstArrayNode){
             var len = mstArrayNode[i]._relations.length;
+            var nodeFirst = mstArrayNode[i]._first;
+            var bStartOrEnd = (nodeFirst==self._start) || (nodeFirst==self._end);
             if(len == 0){
-                zeroDegreeArr.push(mstArrayNode[i]._first);
+                if(!self._bIsSame){
+                    if(!bStartOrEnd){
+                        zeroDegreeArr.push(mstArrayNode[i]._first);
+                    }else{
+                        oneDegreeArr.push(mstArrayNode[i]._first);
+                    }
+                }else{
+                    zeroDegreeArr.push(mstArrayNode[i]._first);
+                }
+
             }else if(len == 1){
-                oneDegreeArr.push(mstArrayNode[i]._first);
+                if(!self._bIsSame){
+                    if(!bStartOrEnd){
+                        oneDegreeArr.push(mstArrayNode[i]._first);
+                    }
+                }else{
+                    oneDegreeArr.push(mstArrayNode[i]._first);
+                }
+
             }
         }
         var arrayEdge = new Array();
@@ -211,7 +228,7 @@ TravelRoute.Calc = {
             // 获取度为0的节点，进行完美匹配算法
             console.log("可以进行完美匹配了。。。");
             var edgeObj = self.getNodeEdge(oneDegreeArr);
-            var matchResults = self.minPerfectMatch(edgeObj);
+            var matchResults = self.minPerfectMatch(edgeObj, mstArrayNode);
             // 添加进去
             for(var j in matchResults){
                 var matchResultsJ = matchResults[j];
@@ -267,42 +284,9 @@ TravelRoute.Calc = {
     // 获取两个节点的边值
     getEdgeVal: function(first, second){
         var arrayNode = this._gbEdgeArr;
-/*        var arrayNode = [
-            {
-                _first: "A",
-                _second: "B",
-                _value: "5"
-            },
-            {
-                _first: "A",
-                _second: "C",
-                _value: "6"
-            },
-            {
-                _first: "A",
-                _second: "D",
-                _value: "7"
-            },
-            {
-                _first: "B",
-                _second: "C",
-                _value: "8"
-            },
-            {
-                _first: "B",
-                _second: "D",
-                _value: "9"
-            },
-            {
-                _first: "C",
-                _second: "D",
-                _value: "10"
-            }
-        ];*/
         for(var i in arrayNode){
             var bFirstToFirst = ((arrayNode[i]._first == first) && (arrayNode[i]._second == second));
             var bFirstToSecond = ((arrayNode[i]._first == second) && (arrayNode[i]._second == first));
-            console.log(bFirstToFirst+"-"+bFirstToSecond);
             if(bFirstToFirst || bFirstToSecond){
                 return arrayNode[i]._value;
             }
@@ -310,9 +294,28 @@ TravelRoute.Calc = {
     },
 
     // 最小完美匹配算法
-    minPerfectMatch: function(edgeArr){
+    minPerfectMatch: function(edgeArr, mstArrayNode){
         var self = this;
         edgeArr = self.sortByValue(edgeArr);
+        // 去除已经在原对象数组总的边
+        for(var r=0; r<edgeArr.length; r++){
+            var bFind = false;
+            for(var i in mstArrayNode){
+                if(mstArrayNode[i]._first == edgeArr[r]._first){
+                    for(var j in mstArrayNode[i]._relations){
+                        if(mstArrayNode[i]._relations[j]._second == edgeArr[j]._second){
+                            edgeArr.splice(j, 1);
+                            bFind = true;
+                            break;
+                        }
+                    }
+                }
+                if(bFind){
+                    r--;
+                    break;
+                }
+            }
+        }
         var vertex = [];
         var vertexMatch = [];
         for(var i in edgeArr){
@@ -347,89 +350,44 @@ TravelRoute.Calc = {
         return false;
     },
 
-    showCalResults: function(){
+    show: function(){
         return this._tspArrayNode;
+    },
+    // 输出计算结果
+    showCalResults: function(){
+        this.searchRoute(this._start);
+        if(this._start == this._end){
+            this._tspRoute.push(this._end);
+        }
+        console.log(this._tspRoute);
+        return this._tspRoute;
+    },
+    // 搜索旅行路径
+    searchRoute: function(start){
+        var tspArrayNode = this._tspArrayNode;
+        this._tspRoute.push(start);
+        for(var i in tspArrayNode){
+            var bFind = false;
+            var tspArrayNodeI = tspArrayNode[i];
+            if(tspArrayNodeI._first == start){
+                for(var j in tspArrayNodeI._relations){
+                    var second = tspArrayNodeI._relations[j]._second;
+                    if(!this.isInArray(this._tspRoute, second)){
+                        this.searchRoute(second);
+                    }
+                }
+            }
+
+        }
+    },
+
+    isInArray: function(arr, item){
+        for(var i in arr){
+            if(arr[i] == item){
+                return true;
+            }
+        }
+        return false;
     }
 
-}
-
-/*var arrayEdge = new Array();*/
-
-/*arrayEdge.push(new Edge("A","B",10));
- arrayEdge.push(new Edge("A","C",15));
- arrayEdge.push(new Edge("A","D",7));
- arrayEdge.push(new Edge("B","C",6));
- arrayEdge.push(new Edge("B","D",4));
- arrayEdge.push(new Edge("C","D",8));*/
-/*TravelRoute.Calc.init("A", "C", arrayEdge);*/
-
-/*arrayEdge.push(new Edge("A","B",96));
-arrayEdge.push(new Edge("A","C",105));
-arrayEdge.push(new Edge("A","D",50));
-arrayEdge.push(new Edge("A","E",41));
-arrayEdge.push(new Edge("A","F",86));
-arrayEdge.push(new Edge("A","G",46));
-arrayEdge.push(new Edge("A","H",29));
-arrayEdge.push(new Edge("A","I",56));
-arrayEdge.push(new Edge("A","J",70));
-arrayEdge.push(new Edge("B","C",78));
-arrayEdge.push(new Edge("B","D",49));
-arrayEdge.push(new Edge("B","E",94));
-arrayEdge.push(new Edge("B","F",21));
-arrayEdge.push(new Edge("B","G",64));
-arrayEdge.push(new Edge("B","H",63));
-arrayEdge.push(new Edge("B","I",41));
-arrayEdge.push(new Edge("B","J",37));
-arrayEdge.push(new Edge("C","D",60));
-arrayEdge.push(new Edge("C","E",84));
-arrayEdge.push(new Edge("C","F",61));
-arrayEdge.push(new Edge("C","G",54));
-arrayEdge.push(new Edge("C","H",86));
-arrayEdge.push(new Edge("C","I",76));
-arrayEdge.push(new Edge("C","J",51));
-arrayEdge.push(new Edge("D","E",45));
-arrayEdge.push(new Edge("D","F",35));
-arrayEdge.push(new Edge("D","G",20));
-arrayEdge.push(new Edge("D","H",26));
-arrayEdge.push(new Edge("D","I",17));
-arrayEdge.push(new Edge("D","J",18));
-arrayEdge.push(new Edge("E","F",80));
-arrayEdge.push(new Edge("E","G",36));
-arrayEdge.push(new Edge("E","H",55));
-arrayEdge.push(new Edge("E","I",59));
-arrayEdge.push(new Edge("E","J",64));
-arrayEdge.push(new Edge("F","G",46));
-arrayEdge.push(new Edge("F","H",50));
-arrayEdge.push(new Edge("F","I",28));
-arrayEdge.push(new Edge("F","J",8));
-arrayEdge.push(new Edge("G","H",45));
-arrayEdge.push(new Edge("G","I",37));
-arrayEdge.push(new Edge("G","J",30));
-arrayEdge.push(new Edge("H","I",21));
-arrayEdge.push(new Edge("H","J",45));
-arrayEdge.push(new Edge("I","J",25));
-
-TravelRoute.Calc.init("A", "C", arrayEdge);
-console.log(TravelRoute.Calc.showCalResults());*/
-
-/*var nodeEdge = [
-    {
-        _first: "A",
-        _relations: []
-    },
-    {
-        _first: "B",
-        _relations:[]
-    },
-    {
-        _first: "C",
-        _relations:[]
-    },
-    {
-        _first: "D",
-        _relations:[]
-    }
-];
-
-
-TravelRoute.Calc.getDegreeCal(nodeEdge);*/
+};
