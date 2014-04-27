@@ -4,26 +4,21 @@ TravelRoute.Map = {
     util: {},
     marker: {},
     objArr: [],
+    start: "",      // 起点
+    end: "",        // 终点
 
     initialize: function(){
         var self = this;
-
         // util
         self.util = TravelRoute.Util;
         //首先呈现的界面
        self.originPresentation();
         // localCity居中显示
        self.centerByLocalCity();
-
         // 修改配置
        self.modDefaults();
-
-        // 事件操作
-//        self.startRunning();
-
         // 运行中dom的操作
         self.runChange();
-
     },
 
     // 加载地图首先展示的页面
@@ -31,11 +26,24 @@ TravelRoute.Map = {
         this.map = new BMap.Map("t_map_container");
         this.point = new BMap.Point(116.404, 39.915);
         this.map.centerAndZoom(this.point,12);
-
         // 将map设为全局变量
         TravelRoute.Config.Map = this.map;
-
-
+    },
+    // 设置起点
+    setStart: function(start){
+        this.start = start;
+    },
+    // 设置终点
+    setEnd: function(end){
+        this.end = end;
+    },
+    // 获取起点
+    getStart: function(){
+        return this.start;
+    },
+    // 获取终点
+    getEnd: function(){
+        return this.end;
     },
 
     // 根据localCity，并将该城市为中心点显示在地图上
@@ -65,7 +73,6 @@ TravelRoute.Map = {
 
     // 修改默认属性
     modProperty: function(){
-
         this.map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
         this.map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
     },
@@ -183,6 +190,10 @@ TravelRoute.Map = {
     // 根据不同策略选择的驾车方式
     selStrategyDrive: function(arrPlace, opt){
         var self = this;
+        // 多地点的起点和终点
+        var gbStart = this.start || arrPlace[0];
+        var gbEnd = this.end || arrPlace[arrPlace.length-1];
+
         var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
         arrPlace = self.util.trimArray(arrPlace);
         self.map.clearOverlays();
@@ -202,24 +213,24 @@ TravelRoute.Map = {
                         },
                         onSearchComplete: function(results){
                             console.log("onSearchComplete...");
-                            console.log(results);
                             if (transit.getStatus() == BMAP_STATUS_SUCCESS){
                                 var plan = results.getPlan(0);
-                                var start = results.getStart().city;
-                                var end = results.getEnd().city;
+                                /*var start = results.getStart().city;
+                                var end = results.getEnd().city;*/
                                 var distance = plan.getDistance(false);
                                 var time = plan.getDuration(false);
-                                //self.addOverlay(results);
-                                //self.addText(results);
 
                                 var value = (value!=0 ? distance : time);
                                 arrayEdge.push(new Edge(start, end, value));
 
                                 if(arrayEdge.length == (arrLen*(arrLen-1)/2)){
-                                    TravelRoute.Calc.init("厦门","长沙",arrayEdge);
+                                    console.log(arrayEdge);
+                                    self.map.clearOverlays();
+                                    TravelRoute.Calc.init(gbStart,gbEnd,arrayEdge);
                                     var routeResults = TravelRoute.Calc.showCalResults();
                                     console.log("oYe");
-                                    console.log(routeResults);
+                                    self.resultsRouteAdd(routeResults, route);
+
                                 }
                             }
 
@@ -238,6 +249,39 @@ TravelRoute.Map = {
                 beginSearch(arrPlace[i], arrPlace[j]);
             }
         }
+    },
+
+    resultsRouteAdd: function(routeResults, policyVal){
+        var len = routeResults.length;
+        for(var i in routeResults){
+            if(i<len-1){
+                this.addDrivingRoute(routeResults[i], routeResults[i+1], policyVal);
+            }
+
+        }
+    },
+
+    addDrivingRoute: function(start, end, policyVal){
+        var self = this;
+        var transit = new BMap.DrivingRoute(self.map,
+            {
+                renderOptions: {
+                    map: self.map,
+                    panel:"",
+                    enableDragging: true
+                },
+                onSearchComplete: function(results){
+                    console.log("onSearchComplete...");
+                    if (transit.getStatus() == BMAP_STATUS_SUCCESS){
+
+                    }
+
+                },
+                policy: policyVal
+            }
+
+        );
+        transit.search(start,end);
     },
 
     // 获取输入框的内容
@@ -320,12 +364,12 @@ TravelRoute.Map = {
                 obj.place = place;
                 var $tpl = self.util.getTemplate("view", "placeItem", obj);
                 $("#t_place_area").append($tpl);
+                $('#t_search_input').val("");
             }
             return false;
         });
         // 取消地点
         $('#t_place_area').on('click','.t_place_item_cancel',function(){
-            /*var val = $(this).siblings('.t_place_item_content').text();*/
             $(this).parent().remove();
         });
         // 多个地点查询
@@ -335,10 +379,14 @@ TravelRoute.Map = {
                 alert("请添加多个地点。。。");
                 return false;
             }else{
-                /*var arrPlace = ["厦门", "泉州", "龙岩", "长沙"];
-                self.selStrategyDrive(arrPlace);*/
                 var $ulPlaces = $('#t_place_area');
-                $ulPlaces.children('')
+                var $liItem = $ulPlaces.children('.t_place_item');
+                var arrPlaces = [];
+                for(var i=0; i<liLen; i++){
+                    var place = $($liItem[i]).find('.t_place_item_content').text();
+                    arrPlaces.push(place);
+                }
+                self.selStrategyDrive(arrPlaces, curStrategy);
             }
         });
 
