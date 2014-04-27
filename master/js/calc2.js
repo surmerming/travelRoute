@@ -30,6 +30,7 @@ TravelRoute.Calc = {
 
     _start: "",             // 出发起点
     _end: "",               // 出发终点
+    _bIsSame: false,        // 起点和终点是否一样
     _gbEdgeArr: [],         // 按边保存
     _gbNodeArr: [],         // 按节点保存
     _nodeList: [],          // 临时节点列表
@@ -42,6 +43,7 @@ TravelRoute.Calc = {
         this._start = start;
         this._end = end;
         this.startCalc(edgeArr);
+        this._bIsSame = ((start==end) ? true : false);
     },
 
     startCalc: function(edgeArr){
@@ -182,9 +184,8 @@ TravelRoute.Calc = {
                 for(var r=0; r<mstArrayNodeItem._relations.length; r++){
                     var nodeRelationsItem = mstArrayNodeItem._relations[r];
                     var isStartOrEnd = (mstArrayNodeItem._first==self._start) || (mstArrayNodeItem._first==self._end);
-                    debugger;
                     // 当节点不为起点或终点时，保留与两个节点的联系；当节点为起点或终点是，保留一个节点的联系
-                    if(r>1 || (isStartOrEnd&&r>0)){
+                    if(r>1 || (!self._bIsSame&&isStartOrEnd&&r>0)){
                         mstArrayNodeItem._relations.splice(r, 1);
                         r--;
                         self.removeAnotherEdge(mstArrayNode, mstArrayNodeItem._first, nodeRelationsItem._second);
@@ -209,28 +210,36 @@ TravelRoute.Calc = {
         }
     },
 
-    // 计算度为1的节点
+    //节点度的计算
     getDegreeCal: function(mstArrayNode){
         var self = this;
         var zeroDegreeArr = [];
         var oneDegreeArr = [];
-        //起点或终点数组
-        var seDegreeArr = [];
-
+        var bIsSame = ((self._start==self._end) ? true : false);
         for(var i in mstArrayNode){
             var len = mstArrayNode[i]._relations.length;
             var nodeFirst = mstArrayNode[i]._first;
             var bStartOrEnd = (nodeFirst==self._start) || (nodeFirst==self._end);
             if(len == 0){
-                if(!bStartOrEnd){
+                if(!bIsSame){
+                    if(!bStartOrEnd){
+                        zeroDegreeArr.push(mstArrayNode[i]._first);
+                    }else{
+                        oneDegreeArr.push(mstArrayNode[i]._first);
+                    }
+                }else{
                     zeroDegreeArr.push(mstArrayNode[i]._first);
+                }
+
+            }else if(len == 1){
+                if(!bIsSame){
+                    if(!bStartOrEnd){
+                        oneDegreeArr.push(mstArrayNode[i]._first);
+                    }
                 }else{
                     oneDegreeArr.push(mstArrayNode[i]._first);
                 }
-            }else if(len == 1){
-                if(!bStartOrEnd){
-                    oneDegreeArr.push(mstArrayNode[i]._first);
-                }
+
             }
         }
         var arrayEdge = new Array();
@@ -397,7 +406,7 @@ arrayEdge.push(new Edge("A","B",96));
  arrayEdge.push(new Edge("H","I",21));
  arrayEdge.push(new Edge("H","J",45));
  arrayEdge.push(new Edge("I","J",25));
-
- TravelRoute.Calc.init("A", "E", arrayEdge);
+debugger;
+ TravelRoute.Calc.init("A", "A", arrayEdge);
  console.log(TravelRoute.Calc.showCalResults());
 
