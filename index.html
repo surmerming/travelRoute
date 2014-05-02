@@ -10,30 +10,66 @@
 </head>
 
 <body>
-<div id="t_map_container"></div>
-<div id="t_right_zone">
-    <div id="t_right_zone_content">
-        <div class="t_mode_options">
-            <select class="t_select_name">
-                <option value="0">最小时间</option>
-                <option value="1">最短距离</option>
-                <option value="2">避开高速</option>
-            </select>
+<div id="t_header">
+    <!--<div class="t_search_add">
+        <input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/>
+        <input type="button" id="t_place_add_btn" value="添加" />
+        <input id="t_btnSearch" type="button" value="查询" />
+    </div>-->
+    <div class="t_header_main">
+        <div class="t_header_title">
+            <a href="#">基于百度地图的旅行路径规划</a>
         </div>
-        <div class="t_search_add">
-            <input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/>
-            <input type="button" id="t_place_add_btn" value="添加" />
+        <div class="t_header_about">
+            <a href="https://github.com/surmerming/travelRoute" target="_blank">Github</a>
         </div>
-        <div id="t_place">
-            <ul id="t_place_area">
-            </ul>
-        </div>
-        <div id="t_search">
-            <input id="t_btnSearch" type="button" value="查询" />
-        </div>
-        <!--<div id="searchResult">
-        </div>-->
     </div>
+</div>
+<div id="t_main">
+    <div id="t_content">
+        <div id="t_content_zone">
+            <!--<div class="t_mode_options">
+                <select class="t_select_name">
+                    <option value="0">最小时间</option>
+                    <option value="1">最短距离</option>
+                    <option value="2">避开高速</option>
+                </select>
+            </div>-->
+            <!--<div class="t_search_add">
+                <input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/>
+                <input type="button" id="t_place_add_btn" value="添加" />
+            </div>
+            <div id="t_place">
+                <ul id="t_place_area">
+                </ul>
+            </div>
+            -->
+            <div class="t_search_add">
+                <input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/>
+                <input type="button" id="t_place_add_btn" value="添加" />
+            </div>
+            <div id="t_place_panel">
+                <ul id="t_place_area">
+
+                </ul>
+            </div>
+            <div id="t_suggest_results">
+            </div>
+            <div id="t_search">
+                <input id="t_btnSearch" type="button" value="查询" />
+            </div>
+            <div id="t_search_results">
+                <ul>
+                </ul>
+            </div>
+            <div id="t_search_route">
+
+            </div>
+        </div>
+    </div>
+    <div id="t_map_container"></div>
+</div>
+<div id="t_progress_info">
 </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=lGv0D1ipAA9UeVtQXsFQpTsU"></script>
 <script type="text/javascript" src="lib/head.js"></script>

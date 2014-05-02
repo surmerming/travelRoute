@@ -79,9 +79,9 @@ TravelRoute.Util = {
         // 自行添加起点和终点
         var start = results.getStart();
         var end = results.getEnd();
-        addStart(start.point, start.title);
-        addEnd(end.point, end.title);
-        var viewPoints = [start.point, end.point];
+        this.addStart(start.point, start.title);
+        this.addEnd(end.point, end.title);
+        /*var viewPoints = [start.point, end.point];
         // 获取方案
         var plan = results.getPlan(0);
         // 获取方案中包含的路线
@@ -92,7 +92,7 @@ TravelRoute.Util = {
         // 设置地图视野
         TravelRoute.Config.Map.setViewport(viewPoints, {
             margins: [40, 10, 10, 10]
-        });
+        });*/
     },
 
     // 添加方案描述
