@@ -13,6 +13,8 @@ TravelRoute.Calc = {
 
     init: function(start, end, edgeArr){
         // 初始化保存起点、终点和各个节点关系图
+        this._tspArrayNode = [];
+        this._tspRoute = [];
         this._gbEdgeArr = edgeArr;
         this._start = start;
         this._end = end;

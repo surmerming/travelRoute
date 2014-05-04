@@ -94,7 +94,7 @@ TravelRoute.Map = {
             var local = new BMap.LocalSearch("全国", { //智能搜索
                 renderOptions: {
                     map: self.map,
-                    panel : "t_suggest_results",
+//                    panel : "t_suggest_results",
                     autoViewport: true,
                     selectFirstResult: false
                 },
@@ -148,24 +148,6 @@ TravelRoute.Map = {
 
     },
 
-    addDrivingRoute: function(start, end, policy){
-        var self = this;
-        var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
-
-        var transit = new BMap.DrivingRoute(self.map,
-            {
-                onSearchComplete: function(results){
-                    if (transit.getStatus() == BMAP_STATUS_SUCCESS){
-                        self.results.push(results);
-                    }
-                },
-                policy: routePolicy[0]
-            }
-
-        );
-        transit.search(start,end);
-    },
-
     // 根据不同策略选择的驾车方式
     selStrategyDrive: function(arrPlace, opt){
         var self = this;
@@ -197,15 +179,20 @@ TravelRoute.Map = {
                                 $('#t_progress_info').show();
                                 $('#t_progress_info').html("时间距离搜索中...");
 
+
                                 if(arrayEdge.length == (arrLen*(arrLen-1)/2)){
                                     console.log(arrayEdge);
                                     $('#t_progress_info').html("路径寻找中...");
+                                    self.searchWaitInfo(1);
                                     TravelRoute.Calc.init(self.start,self.end,arrayEdge);
                                     var routeResults = TravelRoute.Calc.showCalResults();
                                     self.resultsLen = routeResults.length;
                                     console.log("oYe");
                                     self.resultsRouteAdd(routeResults, route);
                                 }
+                            }else{
+                                self.searchWaitInfo(2);
+                                return false;
                             }
 
                         },
@@ -225,6 +212,33 @@ TravelRoute.Map = {
                 beginSearch(arrPlace[i], arrPlace[j]);
             }
         }
+    },
+
+    searchWaitInfo: function(type){
+        var self = this;
+        var obj = {};
+        switch(type){
+            case 0:
+                obj.info = "时间距离搜索中...";
+                break;
+            case 1:
+                obj.info = "路径寻找中...";
+                break;
+            case 2:
+                obj.info = "有无效的目的地,请重新输入...";
+                break;
+
+        }
+        var $ulNode = $('#t_search_results').children('.t_search_results_panel').children('ul');
+        var $liNode = $ulNode.children('.t_search_results_info');
+        if($liNode.length>0){
+            $liNode.html(obj.info);
+        }else{
+            var $tpl = self.util.getTemplate("view", "resultsInfo", obj);
+            $ulNode.html("");
+            $ulNode.append($tpl);
+        }
+
     },
 
     resultsRouteAdd: function(routeResults, policy){
@@ -254,7 +268,11 @@ TravelRoute.Map = {
         obj.item = index;
         obj.content = "";
         var $tpl = this.util.getTemplate("view", "resultItem", obj);
-        $("#t_search_results").children('ul').append($tpl);
+        var $ulNode = $("#t_search_results").children('.t_search_results_panel').children('ul');
+        if($ulNode.children('.t_search_results_info').length>0){
+            $ulNode.html("");
+        }
+        $ulNode.append($tpl);
     },
 
     addDrivingRoute: function(start, end, policyVal, index){
@@ -305,6 +323,10 @@ TravelRoute.Map = {
     addText: function(start, end, results, index){
         console.info(index);
         var plan = results.getPlan(0);
+        var distance = plan.getDistance();
+        var time = plan.getDuration();
+        var timeDistance = "（约" + distance + "/" + time + ")";
+
         var htmls = [];
         for (var i =0; i < plan.getNumRoutes(); i ++) {
             var route = plan.getRoute(i);
@@ -315,11 +337,10 @@ TravelRoute.Map = {
         }
         var routeDes = $('#t_search_results').find('.t_route_description[item='+index+']');
         routeDes.html(htmls.join(''));
-//        var routeDes = $('#t_search_route');
-//        routeDes.html(htmls.join(''));
-        routeDes.css({'line-height': '1.4em','font-size': '12px'});
-//        console.log(htmls.join(''));
 
+        routeDes.css({'line-height': '1.4em','font-size': '12px'});
+        var $resultsItem = $('#t_search_results').find('.t_results_item[item='+index+']');
+        $resultsItem.children('.t_results_item_timeDistance').html(timeDistance);
     },
 
     diffPlaceType: function(place){
@@ -331,22 +352,6 @@ TravelRoute.Map = {
         }
         return opt;
     },
-
-    /*addStart: function(point, title){
-        this.map.addOverlay(new BMap.Marker(point, {
-            title: title,
-            icon: new BMap.Icon('assets/images/icon_nav_start.png', new BMap.Size(31, 46), {
-                anchor: new BMap.Size(4, 36)
-            })}));
-    },
-
-    addEnd: function(point, title){
-        this.map.addOverlay(new BMap.Marker(point, {
-            title: title,
-            icon: new BMap.Icon('assets/images/icon_navi_poi_parking.png', new BMap.Size(31, 46), {
-                anchor: new BMap.Size(4, 36)
-            })}));
-    },*/
 
     addPlaceMark: function(point, title, opt){
         var baseImg = 'assets/images/';
@@ -433,6 +438,33 @@ TravelRoute.Map = {
                         px = self.map.pointToPixel(p);
                     self.map.addOverlay(marker);
                 }
+            },
+            {
+                text:'在此附近找',
+                callback:function(p){
+                    var $tplContent = self.util.getTemplate("view", "searchNearBy");
+                    var marker = new BMap.Marker(p);
+                    var infoWindow = new BMap.InfoWindow($tplContent);  // 创建信息窗口对象
+                    self.map.addOverlay(marker);
+                    marker.addEventListener("click", function(){
+                        this.openInfoWindow(infoWindow);
+                        $('.t_window_search_btn').click(function(){
+                           var searchVal = $(this).prev().val();
+                           self.searchInBounds(searchVal);
+                        });
+                        $('.t_window_main_item ul li').click(function(){
+                             var $searchItem = $(this).parents('.t_window_main_item').next();
+                             $searchItem.children('.t_window_nearby_input').val($(this).text());
+                             $searchItem.children('.t_window_search_btn').trigger('click');
+                        });
+                    });
+                }
+            },
+            {
+                text:'清除标记',
+                callback:function(){
+                    self.map.clearOverlays();
+                }
             }
         ];
 
@@ -444,6 +476,20 @@ TravelRoute.Map = {
             }
         }
         self.map.addContextMenu(contextMenu);
+    },
+
+    // 可是区域搜索
+    searchInBounds: function(keywords){
+        var self = this;
+        var local = new BMap.LocalSearch(self.map, {
+            renderOptions:{map: self.map}
+        });
+        local.searchInBounds(keywords, self.map.getBounds());
+
+        self.map.addEventListener("dragend",function(){
+            //self.map.clearOverlays();
+            local.searchInBounds(keywords, self.map.getBounds());
+        });
     },
 
     // 运行时对DOM的修改
@@ -458,9 +504,16 @@ TravelRoute.Map = {
 
         var curStrategy = 0;
 
+        var $searchResults = $('#t_search_results');
+
         // 策略选择项
-        $('.t_select_name').on("change", function(){
-            curStrategy = $(this).val();
+        $searchResults.children('.t_search_results_opt').on("click", "li", function(){
+            var $this = $(this);
+            $this.addClass('t_search_results_opt_focus');
+            $this.siblings().removeClass('t_search_results_opt_focus');
+            curStrategy = $this.attr('opt');
+            $('#t_btnSearch').trigger('click');
+
         });
 
         // 进行DOM操作
@@ -474,6 +527,12 @@ TravelRoute.Map = {
                 $('#t_search_input').val("");
             }
             return false;
+        });
+        //按回车键的时候，触发点击添加按钮的操作
+        $('#t_search_input').keyup(function(e){
+            if(e.keyCode == 13){
+                $('#t_place_add_btn').trigger('click');
+            }
         });
         // 取消地点
         $('#t_place_area').on('click','.t_place_item_cancel',function(){
@@ -493,8 +552,14 @@ TravelRoute.Map = {
                     var place = $($liItem[i]).find('.t_place_item_content').text();
                     arrPlaces.push(place);
                 }
+                var $resultsOpt = $("#t_search_results").children('.t_search_results_opt');
+                if($resultsOpt.children('ul').length == 0){
+                    var $tpl = self.util.getTemplate("view", "strategyOpt");
+                    $resultsOpt.append($tpl);
+                }
+                $('#t_search_results').children('.t_search_results_panel').children('ul').html("");
+                self.searchWaitInfo(0);
                 self.selStrategyDrive(arrPlaces, curStrategy);
-//                self.addDrivingRoute("福建省厦门市", "湖南省长沙市", 0);
             }
         });
 
@@ -502,15 +567,12 @@ TravelRoute.Map = {
         $('#t_search_results').on('click', '.t_results_item',function(){
             var item = $(this).attr('item');
             $(this).siblings('.t_route_description[item='+item+']').toggle();
-            $(this).children('div').toggleClass('t_results_item_icon_up');
+            $(this).children('div').toggleClass('t_results_item_icon_down');
         });
 
-        /*$('#t_place_area').on('click', '.t_place_item', function(){
-         console.log("hoverin");
-                $(this).children('.t_place_item_set').show();     */
 
+        // 设定起点、终点的显示与隐藏
         $('#t_place_area').on('mouseover mouseout', '.t_place_item', function(){
-
             var eventType = event.type;
             if(eventType == "mouseover"){
                 $(this).children('.t_place_item_set').show();
@@ -518,43 +580,71 @@ TravelRoute.Map = {
                 $(this).children('.t_place_item_set').hide();
             }
         });
-
+        // 添加起点标记
         $('#t_place_area').on('click', '.t_place_item_start', function(){
             var $item = $(this).parents('.t_place_item');
             var $content = $item.find('.t_place_item_content');
             var $type = $item.find('.t_place_item_type');
             var contentText = $content.text();
             self.setStart(contentText);
-            $type.html("起点：");
-            $type.attr('type', 1);
+            if($type.attr('type') == 2){
+                $type.html("起点、终点：");
+                $type.attr('type', 3);
+            }else{
+                $type.html("起点：");
+                $type.attr('type', 1);
+            }
             $content.html(contentText);
             $(this).attr('disabled', 'disabled');
             var $siblingsItem = $item.siblings();
-            if($siblingsItem.attr('type')==1){
-                $siblingsItem.attr('type', 0);
-                $siblingsItem.find('.t_place_item_start').attr('disabled','false');
-                $siblingsItem.find('.t_place_item_type').html("");
+            var $siblingsType = $siblingsItem.find('.t_place_item_type');
+            var siblingsTypeLen = $siblingsType.length;
+            for(var i=0; i< siblingsTypeLen; i++){
+                var iType = $siblingsType.eq(i).attr('type');
+                if(iType==1){
+                    $siblingsType.eq(i).attr('type', 0);
+                    $siblingsItem.find('.t_place_item_type').eq(i).html("");
+                }else if(iType==3){
+                    $siblingsType.eq(i).attr('type', 2);
+                    $siblingsItem.find('.t_place_item_type').eq(i).html("终点：");
+                }
+
             }
-
+            $siblingsItem.find('.t_place_item_start').removeAttr('disabled');
         });
-
+        // 添加终点标记
         $('#t_place_area').on('click', '.t_place_item_end', function(){
             var $item = $(this).parents('.t_place_item');
             var $content = $item.find('.t_place_item_content');
             var $type = $item.find('.t_place_item_type');
             var contentText = $content.text();
             self.setEnd(contentText);
-            $type.html("终点：");
-            $type.attr('type', 2);
+            if($type.attr('type') == 1){
+                $type.html("起点、终点：");
+                $type.attr('type', 3);
+            }else{
+                $type.html("终点：");
+                $type.attr('type', 2);
+            }
             $content.html(contentText);
             $(this).attr('disabled', 'disabled');
-        });
-    },
+            var $siblingsItem = $item.siblings();
+            var $siblingsType = $siblingsItem.find('.t_place_item_type');
+            var siblingsTypeLen = $siblingsType.length;
+            for(var i=0; i< siblingsTypeLen; i++){
+                var iType = $siblingsType.eq(i).attr('type');
+                if(iType==2){
+                    $siblingsType.eq(i).attr('type', 0);
+                    $siblingsItem.find('.t_place_item_type').eq(i).html("");
+                }else if(iType==3){
+                    $siblingsType.eq(i).attr('type', 1);
+                    $siblingsItem.find('.t_place_item_type').eq(i).html("起点：");
+                }
 
-    addExample: function(){
-        var self = this;
-        var driving = new BMap.DrivingRoute(self.map, {renderOptions: {map: self.map, panel: "searchResult", autoViewport: true}});
-        driving.search("中关村", "魏公村");
+            }
+            $siblingsItem.find('.t_place_item_end').removeAttr('disabled');
+        });
+
     },
 
     addDemo: function(){
