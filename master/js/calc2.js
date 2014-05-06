@@ -437,7 +437,7 @@ TravelRoute.Calc = {
     }
 
 }
-
+/*
 var arrayEdge = new Array();
 
 
@@ -488,4 +488,4 @@ arrayEdge.push(new Edge("A","B",96));
  arrayEdge.push(new Edge("I","J",25));
  TravelRoute.Calc.init("B", "C", arrayEdge);
  console.log(TravelRoute.Calc.show());
-TravelRoute.Calc.showCalResults();
+TravelRoute.Calc.showCalResults();*/

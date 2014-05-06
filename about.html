@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>基于百度地图的旅行路径规划</title>
+    <link rel="stylesheet" href="master/css/base.css" />
+    <link rel="stylesheet" href="master/css/map.css" />
+
+</head>
+
+<body>
+<div id="t_header">
+    <div class="t_header_main">
+        <div class="t_header_title">
+            <a href="index.html">基于百度地图的旅行路径规划</a>
+        </div>
+        <div class="t_header_about">
+            <a href="about.html" target="_self">关于</a>
+        </div>
+    </div>
+</div>
+<div id="t_about_main" style="width: 100%; height: 100%;">
+    <div id="t_about_content" style="width: 1000px; margin: auto;">
+        <h3>路径规划算法步骤：</h3>
+
+        <p>1. 利用Kruskal算法思想生成最小生成树</p>
+        <p>2. 利用贪心算法依次删除节点度大于2的边，这样得到的是孤立点、一度点、和二度点</p>
+        <p>3. 如果孤立点的个数为1，则利用贪心思想连接与其边最小的一度点的边，这样的话，只剩下一度点和二度点</p>
+        <p>可以证明，此时的一度点的个数必为偶数。此时再利用最小完美匹配算法匹配一度点，便可以得到旅行商算法的解</p>
+        <p>4. 如果孤立点的个数大于1，跳到步骤1，将生成的最小生成树和之前的节点对象合并</p>
+        <p>5. 如果起点和终点一样，则为旅行商算法，得解</p>
+        <p>6. 如果起点和终点不一样，在删除与起点和终点相联系的边，可以得到以下三种情况：</p>
+        <p>1). 如果起点和终点直接相连，去掉后，只有两个孤立点，则利用贪心算法思想将两个孤立节点分别与两个一度节点连接起来</p>
+        <p>2). 如果去掉后，有三个孤立点，则应该将除起点终点外的那个孤立点与最小边的一度节点连接起来，然后再同第一种情况操作</p>
+        <p>3). 如果去掉后，只有两个孤立节点，有四个一度节点，则应该先将两组两个一度节点最小的边连接起来，然后再同第一种情况</p>
+        <p>7. 算法计算得到以节点对象为中心的结果，然后通过寻找，将路径结果依次插入到数组中，即得到路径规划结果</p>
+    </div>
+</div>
+
+
+</body>
+</html> 

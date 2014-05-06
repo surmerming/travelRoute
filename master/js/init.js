@@ -45,7 +45,7 @@ TravelRoute.FileLists = {
         'master/js/util.js',            //工具包
         'master/js/map.js',             //地图控制
         'master/js/renderControl.js',   //视图呈现控制
-        'master/js/calc.js'             //算法计算
+        'master/js/calc1.js'             //算法计算
         /*==============================*/
     ]
 };
