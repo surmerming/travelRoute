@@ -17,6 +17,10 @@
 .t_header_about{
     float: right;
 }
+.t_header_github{
+    float: right;
+    padding-right: 20px;
+}
 .t_search_add{
     margin: 0px auto;
 }

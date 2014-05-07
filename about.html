@@ -16,25 +16,64 @@
             <a href="index.html">基于百度地图的旅行路径规划</a>
         </div>
         <div class="t_header_about">
-            <a href="about.html" target="_self">关于</a>
+            <a href="about.html">关于</a>
+        </div>
+        <div class="t_header_github">
+            <a href="https://github.com/surmerming/travelRoute" target="_blank">Github</a>
         </div>
     </div>
 </div>
 <div id="t_about_main" style="width: 100%; height: 100%;">
     <div id="t_about_content" style="width: 1000px; margin: auto;">
-        <h3>路径规划算法步骤：</h3>
-
-        <p>1. 利用Kruskal算法思想生成最小生成树</p>
-        <p>2. 利用贪心算法依次删除节点度大于2的边，这样得到的是孤立点、一度点、和二度点</p>
-        <p>3. 如果孤立点的个数为1，则利用贪心思想连接与其边最小的一度点的边，这样的话，只剩下一度点和二度点</p>
-        <p>可以证明，此时的一度点的个数必为偶数。此时再利用最小完美匹配算法匹配一度点，便可以得到旅行商算法的解</p>
-        <p>4. 如果孤立点的个数大于1，跳到步骤1，将生成的最小生成树和之前的节点对象合并</p>
-        <p>5. 如果起点和终点一样，则为旅行商算法，得解</p>
-        <p>6. 如果起点和终点不一样，在删除与起点和终点相联系的边，可以得到以下三种情况：</p>
-        <p>1). 如果起点和终点直接相连，去掉后，只有两个孤立点，则利用贪心算法思想将两个孤立节点分别与两个一度节点连接起来</p>
-        <p>2). 如果去掉后，有三个孤立点，则应该将除起点终点外的那个孤立点与最小边的一度节点连接起来，然后再同第一种情况操作</p>
-        <p>3). 如果去掉后，只有两个孤立节点，有四个一度节点，则应该先将两组两个一度节点最小的边连接起来，然后再同第一种情况</p>
-        <p>7. 算法计算得到以节点对象为中心的结果，然后通过寻找，将路径结果依次插入到数组中，即得到路径规划结果</p>
+        <p style="text-align: center;"><span style="font-size: 16px;"><strong>　</strong></span>　</p>
+        <p style="text-align: left;"><strong>一、项目概述</strong></p>
+        <p style="text-align: left;">　　旅行路径规划问题，是为了实现在多个目标景点中进行旅行，并且保证每个目标点只访问一次，且总路径最短的问题。跟旅行商问题大体差不多，只不过旅行路径规划问题是起点和终点都是同一点而已，而旅行路径规划问题，起点和终点可以相同，也可以不同。此算法首先是基于最小生成树的旅行商算法的求解，再结合贪心算法和匹配算法的思想，把局部最优转化为全局最优，避免了最临近算法中最后几步产生的较大的误差。</p>
+        <p style="text-align: left;"><strong>二、算法步骤</strong>　　</p>
+        <p>　　1. 利用Kruskal算法思想生成最小生成树</p>
+        <p>　　2. 利用贪心算法依次删除节点度大于2的边，这样得到的是孤立点、一度点、和二度点</p>
+        <p>　　3. 如果孤立点的个数为1，则利用贪心思想连接与其边最小的一度点的边，这样的话，只剩下一度点和二度点</p>
+        <p>　　　　可以证明，此时的一度点的个数必为偶数。此时再利用最小完美匹配算法匹配一度点，便可以得到旅行商算法的解</p>
+        <p>　　4. 如果孤立点的个数大于1，跳到步骤1，将生成的最小生成树和之前的节点对象合并</p>
+        <p>　　5. 如果起点和终点一样，则为旅行商算法，得解</p>
+        <p>　　6. 如果起点和终点不一样，在删除与起点和终点相联系的边，可以得到以下三种情况：</p>
+        <p>　　　　1). 如果起点和终点直接相连，去掉后，只有两个孤立点，则利用贪心算法思想将两个孤立节点分别与两个一度节点连接起来</p>
+        <p>　　　　2). 如果去掉后，有三个孤立点，则应该将除起点终点外的那个孤立点与最小边的一度节点连接起来，然后再同第一种情况操作</p>
+        <p>　　　　3). 如果去掉后，只有两个孤立节点，有四个一度节点，则应该先将两组两个一度节点最小的边连接起来，然后再同第一种情况</p>
+        <p>　　7. 算法计算得到以节点对象为中心的结果，然后通过寻找，将路径结果依次插入到数组中，即得到路径规划结果</p>
+        <p><strong>三、算法程序流程图</strong></p>
+        <p style="text-align: left;">　　<img src="assets/images/process.png" alt="程序流程图" /></p>
+        <p style="text-align: left;"><strong>四、功能介绍</strong></p>
+        <p style="text-align: left;">　　<strong>搜索提示：</strong>在左边面板中输入景点的前面几个字母，会有搜索提示建议，建议采用提示中的目的地，否则有可能目的地不存在</p>
+        <p style="text-align: left;">　　<strong>景点添加：</strong>在搜索提示中，鼠标点击该项，或者按Enter键，均可进行添加景点，或者直接点击添加按钮，可以进行添加景点</p>
+        <p style="text-align: left;">　　<strong>景点删除：</strong>添加的景点在下面的面板中会显示出来，点击该项右侧的删除"X"，即可删除该景点</p>
+        <p style="text-align: left;">　　<strong>起点终点设置：</strong>鼠标悬停在该项时，可以设置起点、设置终点</p>
+        <p style="text-align: left;">　　<strong>搜索：</strong>点击搜索的时候，开始进行路径规划算法的计算，此时会在页面有个覆盖层提示用户进展，搜索完成后，添加后，覆盖层消失</p>
+        <p style="text-align: left;">　　<strong>路径结果添加：</strong>此时为驾车搜索的路径规划结果集，将目的地结果集显示在搜索结果面板中，同时将驾车详情显示在搜索结果面板中</p>
+        <p style="text-align: left;">　　<strong>策略选择：</strong>默认为最小路径，也可以选择最短时间、避开高速策略</p>
+        <p style="text-align: left;">　　<strong>地图标注：</strong>将搜索结果顺序用折线在百度地图上联系起来，并呈现</p>
+        <p style="text-align: left;">　　<strong>地图右键：<br /></strong></p>
+        <p style="text-align: left;"><strong>　　　 1). 放大：</strong>使区域显示更精准&nbsp;<strong><br /></strong></p>
+        <p style="text-align: left;"><strong>　　　 2). 缩小： </strong>在更大的区域进行查看</p>
+        <p style="text-align: left;"><strong>　　　 3). 放大到最大级：</strong>放大到最大的区域查看</p>
+        <p style="text-align: left;"><strong>　　　 4). 查看全国： </strong>查看全中国地图</p>
+        <p style="text-align: left;"><strong>　　　 5). 在此添加标注：</strong>在鼠标点击的位置添加标注</p>
+        <p style="text-align: left;"><strong>　　　 6). 在此附近找：</strong>在附近搜索酒店、餐厅、银行等等</p>
+        <p style="text-align: left;"><strong>　　　 7). 清除标记：</strong>将地图的标记全部清除</p>
+        <p style="text-align: left;">　　<strong>Gihub：</strong>使用Github进行代码管理平台，里面有全部代码</p>
+        <p style="text-align: left;"><strong>　　关于： </strong>对本项目的初略说明</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;"><strong>　　　　</strong></p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
     </div>
 </div>
 
