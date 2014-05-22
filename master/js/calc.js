@@ -9,16 +9,16 @@ TravelRoute.Calc = {
     init: function(start, end, edgeList){
         // 对象属性的声明和初始化
         this._trStart = "",                 // 出发起点
-            this._trEnd = "",                   // 出发终点
-            this._trBSameOnStartEnd = false,    // 起点和终点是否一样
-            this._trGbEdgeList = [],            // 保存边对象列表
-            this._trGbNodeList = [],            // 保存节点对象列表
-            this._trMstTreeList = [],           // 保存最小生成树节点列表
-            this._trTspNodeList = [],           // 保存旅行商计算的节点列表
-            this._trRouteNodeList = [],         // 保存路径规划节点列表
-            this._trRouteList = [],             // 保存路径结果列表
-            this._trTmpNodeList = [],           // 保存临时生成的节点列表
-            this._trTmpEdgeList = [];           // 保存临时生成的边对象列表
+        this._trEnd = "",                   // 出发终点
+        this._trBSameOnStartEnd = false,    // 起点和终点是否一样
+        this._trGbEdgeList = [],            // 保存边对象列表
+        this._trGbNodeList = [],            // 保存节点对象列表
+        this._trMstTreeList = [],           // 保存最小生成树节点列表
+        this._trTspNodeList = [],           // 保存旅行商计算的节点列表
+        this._trRouteNodeList = [],         // 保存路径规划节点列表
+        this._trRouteList = [],             // 保存路径结果列表
+        this._trTmpNodeList = [],           // 保存临时生成的节点列表
+        this._trTmpEdgeList = [];           // 保存临时生成的边对象列表
 
         // 对象属性的赋值
         this._trStart = start;              // 保存出发起点
@@ -29,9 +29,13 @@ TravelRoute.Calc = {
             var edgeItem = edgeList[i];
             this.createNode(edgeItem, this._trGbNodeList);    // 保存节点对象
         }
+        if(edgeList.length>1){
+            // 开始进行计算
+            this.doCalc(edgeList);
+        }else{
+            this._trRouteNodeList = this._trGbNodeList;
+        }
 
-        // 开始进行计算
-        this.doCalc(edgeList);
     },
 
     /**
@@ -197,13 +201,59 @@ TravelRoute.Calc = {
             }else if(zeroDegreeLen == 3){
 
                 console.log("可以连接一度节点了");
-
                 // 获取除起点终点外的那个孤立点
                 var isolatePoint = self.getIsolatePoint(zeroDegreeArr);
-                // 将孤立点与一度节点连接起来
-                self.doConnectWithOneDegree(isolatePoint, oneDegreeArr, nodeList);
-                // 重新调用该函数
-                self.tspToTravelRoute();
+
+                if(!self._trBSameOnStartEnd && nodeList.length==3){
+                    var edgeVal1 = self.getEdgeVal(isolatePoint, self._trStart);
+                    var edgeVal2 = self.getEdgeVal(isolatePoint, self._trEnd);
+                    var edgeItem1 = {
+                        _first: isolatePoint,
+                        _second: self._trStart,
+                        _value: edgeVal1
+                    };
+                    var edgeItem2 = {
+                        _first: isolatePoint,
+                        _second: self._trEnd,
+                        _value: edgeVal2
+                    };
+                    var tmpArr = [];
+                    tmpArr.push(edgeItem1);
+                    tmpArr.push(edgeItem2);
+                    self.addMatchEdge(tmpArr, nodeList);
+                    // 此时的tmpMstNodeArr即为旅行商算法的结果
+                    self._trRouteNodeList = nodeList;
+                    return;
+
+                }else{
+                    // 将孤立点与一度节点连接起来
+                    self.doConnectWithOneDegree(isolatePoint, oneDegreeArr, nodeList);
+                    // 重新调用该函数
+                    self.tspToTravelRoute();
+                }
+            }else if(zeroDegreeLen == 4){
+                var isolateArr = [];
+                for(var index in zeroDegreeArr){
+                    if(zeroDegreeArr[index]!=this._trStart){
+                        if(zeroDegreeArr[index]!=this._trEnd){
+                            isolateArr.push(zeroDegreeArr[index]);
+                        }
+                    }
+                }
+
+                var isolateEdge = self.getEdgeVal(isolateArr[0], isolateArr[1]);
+                var edgeItem3 = {
+                    _first: isolateArr[0],
+                    _second: isolateArr[1],
+                    _value: isolateEdge
+                };
+                var tmpArr2 = [];
+                tmpArr2.push(edgeItem3);
+
+                // 将匹配的结果添加进去
+                self.addMatchEdge(tmpArr2, nodeList);
+
+                self.tspToTravelRoute();    // 重新获取下
             }
         }
     },
@@ -544,10 +594,16 @@ TravelRoute.Calc = {
      */
     doConnectWithOneDegree: function(isolatePoint, oneDegreeArr, tmpMstNodeArr){
         var valArr = [];
-        for(var i in oneDegreeArr){
-            var value = this.getEdgeVal(isolatePoint, oneDegreeArr[i]);
-            valArr.push({_first:isolatePoint,_second:oneDegreeArr[i],_value: value});
+        if(oneDegreeArr.length>0){
+            for(var i in oneDegreeArr){
+                var value = this.getEdgeVal(isolatePoint, oneDegreeArr[i]);
+                valArr.push({_first:isolatePoint,_second:oneDegreeArr[i],_value: value});
+            }
+        }else{
+            // 否则，与起点终点相连
+
         }
+
         // 获取最小的边
         var minEdge = this.sortByValueAsc(valArr)[0];
         console.log(minEdge);
