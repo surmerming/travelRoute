@@ -8,6 +8,11 @@ TravelRoute.Map = {
     end: "",        // 终点
     results: [],    // 保存结果
     resultsLen: 0,  // 结果长度
+    placeArr: [],   // 目的地点
+    tmpArr: [],     // 临时保存节点
+    tmpStart: "",   // 临时起点
+    tmpEnd: "",     // 临时终点
+    choosePlace: "",// 选择地点
 
     initialize: function(){
         var self = this;
@@ -21,6 +26,7 @@ TravelRoute.Map = {
        self.modDefaults();
         // 运行中dom的操作
         self.runChange();
+
     },
 
     // 加载地图首先展示的页面
@@ -46,6 +52,14 @@ TravelRoute.Map = {
     // 获取终点
     getEnd: function(){
         return this.end;
+    },
+    // 清除起点
+    clearStart: function(){
+        this.start = "";
+    },
+    // 清除终点
+    clearEnd: function(){
+        this.end = "";
     },
 
     // 根据localCity，并将该城市为中心点显示在地图上
@@ -94,14 +108,16 @@ TravelRoute.Map = {
             var local = new BMap.LocalSearch("全国", { //智能搜索
                 renderOptions: {
                     map: self.map,
-//                    panel : "t_suggest_results",
+                    panel : "t_suggest_results",
                     autoViewport: true,
                     selectFirstResult: false
                 },
                 onSearchComplete: function(){
+
                     var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+
                     self.map.centerAndZoom(pp, 18);
-                    self.map.addOverlay(new BMap.Marker(pp));    //添加标注
+//                    self.map.addOverlay(new BMap.Marker(pp));    //添加标注
                 }
             });
             local.search(resultValue);
@@ -134,6 +150,14 @@ TravelRoute.Map = {
             markSearchResults();
             //self.getPointPlace(resultValue);
         });
+
+        // 添加点击事件
+        $('#t_suggest_results').on('click', 'li', function(){
+             self.choosePlace = $(this).find('div').eq(0).find('span').eq(0).text();
+             $('#my_popup').find('.popup_container').children().html("你确定设为目标景点吗？");
+             $('#my_popup').find('.popup_button').show();
+             $('#my_popup').popup('show');
+        });
     },
 
     // 根据地点进行标注
@@ -145,6 +169,17 @@ TravelRoute.Map = {
             var marker = new BMap.Marker(point);        // 创建标注
             self.map.addOverlay(marker);                // 将标注添加到地图中
         },"全国");
+    },
+
+    // 根据关键字搜索城市
+    getCityByKeyWords: function(key, cb){
+        var self = this;
+        var local = new BMap.LocalSearch("全国",{
+            onSearchComplete: function(results){
+               cb(results.city);
+            }
+        });
+        local.search(key);
 
     },
 
@@ -186,12 +221,25 @@ TravelRoute.Map = {
                                     self.searchWaitInfo(1);
                                     TravelRoute.Calc.init(self.start,self.end,arrayEdge);
                                     var routeResults = TravelRoute.Calc.showCalResults();
+                                    self.tmpStart = self.start;
+                                    self.tmpEnd = self.end;
+                                    // 清除起点和终点
+                                    self.clearStart();
+                                    self.clearEnd();
                                     self.resultsLen = routeResults.length;
                                     console.log("oYe");
                                     self.resultsRouteAdd(routeResults, route);
+
                                 }
                             }else{
                                 self.searchWaitInfo(2);
+                                $('#t_progress_info').hide();
+                                var infoText = "【"+start+"】到【"+end+"】不可达,请检查后输入";
+                                $('#my_popup').find('.popup_container').children().html(infoText);
+                                $('#my_popup').popup('show');
+                                // 清除起点和终点
+                                self.clearStart();
+                                self.clearEnd();
                                 return false;
                             }
 
@@ -214,18 +262,40 @@ TravelRoute.Map = {
         }
     },
 
+    // 搜索等待提示
     searchWaitInfo: function(type){
         var self = this;
         var obj = {};
+        var i =1;
+        var func = function(){
+            console.log("在执行。。。");
+            var $info = $('#t_progress_info');
+            var textInfo = $info.text().split(".")[0];
+            if(i==1){
+                $info.html(textInfo + ".");
+                i++;
+            }else if(i==2){
+                $info.html(textInfo + "..");
+                i++;
+            }else if(i==3){
+                $info.html(textInfo + "...");
+                i = 0;
+            }
+        }
+        setTimeout(func, 1000);
+
+
+
+
         switch(type){
             case 0:
-                obj.info = "时间距离搜索中...";
+                obj.info = "时间距离搜索中.";
                 break;
             case 1:
-                obj.info = "路径寻找中...";
+                obj.info = "路径寻找中.";
                 break;
             case 2:
-                obj.info = "有无效的目的地,请重新输入...";
+                obj.info = "两地目标不可达.";
                 break;
 
         }
@@ -241,6 +311,7 @@ TravelRoute.Map = {
 
     },
 
+    // 结果路径添加
     resultsRouteAdd: function(routeResults, policy){
         var self = this;
         self.map.clearOverlays();
@@ -251,19 +322,21 @@ TravelRoute.Map = {
             self.showResults(routeResults[i], i);
             if(i<len-1){
                 // 地图上添加路径
-                self.addDrivingRoute(routeResults[i], routeResults[i+1], policy, i);
+                self.addDrivingRoute(routeResults[i], routeResults[i+1], policy, len, i);
             }
         }
     },
 
+    // 显示结果
     showResults: function(place, index){
         var obj = {};
+        obj.place = place;
         if(index == 0){
-            obj.place = "<span class='t_results_item_start'>起点</span>" + ": " + place;
+            obj.type = "起点：";
         }else if(index == this.resultsLen-1){
-            obj.place = "<span class='t_results_item_end'>终点</span>" + ": " + place;
+            obj.type = "终点：";
         }else{
-            obj.place = "<span class='t_results_item_through'>途径</span>" + ": " + place;
+            obj.type = "途径：";
         }
         obj.item = index;
         obj.content = "";
@@ -275,7 +348,8 @@ TravelRoute.Map = {
         $ulNode.append($tpl);
     },
 
-    addDrivingRoute: function(start, end, policyVal, index){
+    // 添加驾车路线
+    addDrivingRoute: function(start, end, policyVal, len, index){
         var self = this;
         console.log(start+"->"+end);
         var transit = new BMap.DrivingRoute(self.map,
@@ -285,8 +359,9 @@ TravelRoute.Map = {
                         console.log(start + "=====" + end);
                         // 添加覆盖层
                        self.addOverlays(start, end, results);
+
                         // 添加文字
-                       self.addText(start, end, results, index);
+                       self.addText(start, end, results, index, len);
                     }
 
                 },
@@ -297,16 +372,22 @@ TravelRoute.Map = {
         transit.search(start,end);
     },
 
+    // 添加覆盖物
     addOverlays: function(oriStart, oriEnd, results){
         // 自行添加起点和终点
         var start = results.getStart();
         var end = results.getEnd();
-
-        var startType = this.diffPlaceType(oriStart);
-        var endType = this.diffPlaceType(oriEnd);
-        console.log("start:"+startType+"-"+oriStart+",end:"+endType+"-"+oriEnd);
-        this.addPlaceMark(start.point, start.title, startType);
-        this.addPlaceMark(end.point, end.title, endType);
+        this.tmpArr = [];
+        if(!this.isMarkIconAdded(oriStart)){
+            var startType = this.diffPlaceType(oriStart);
+            this.addPlaceMark(start.point, start.title, startType);
+            this.tmpArr.push(oriStart);
+        }
+        if(!this.isMarkIconAdded(oriEnd)){
+            var endType = this.diffPlaceType(oriEnd);
+            this.addPlaceMark(end.point, end.title, endType);
+            this.tmpArr.push(oriEnd);
+        }
 
         var viewPoints = [start.point, end.point];
         var plan = results.getPlan(0);
@@ -320,7 +401,8 @@ TravelRoute.Map = {
         });
     },
 
-    addText: function(start, end, results, index){
+    // 添加文字
+    addText: function(start, end, results, index, len){
         console.info(index);
         var plan = results.getPlan(0);
         var distance = plan.getDistance();
@@ -340,23 +422,38 @@ TravelRoute.Map = {
 
         routeDes.css({'line-height': '1.4em','font-size': '12px'});
         var $resultsItem = $('#t_search_results').find('.t_results_item[item='+index+']');
-        $resultsItem.children('.t_results_item_timeDistance').html(timeDistance);
+        if(index==0){
+            $resultsItem.addClass('t_results_start');
+        }else if(index==len-2){
+            var ord = index + 1;
+            var $resultsItem1 = $('#t_search_results').find('.t_results_item[item='+ord+']');
+            $resultsItem1.addClass('t_results_end');
+        }
+        $resultsItem.find('.t_results_item_timeDistance').html(timeDistance);
     },
 
+    // 区分地点类型
     diffPlaceType: function(place){
         var opt = 1;
-        if(place == this.start){
-            opt = 0;
-        }else if(place == this.end){
-            opt = 2;
+        if(this.tmpStart == this.tmpEnd){
+            if(place == this.tmpStart){
+                opt = 3;
+            }
+        }else{
+            if(place == this.tmpStart){
+                opt = 0;
+            }else if(place == this.tmpEnd){
+                opt = 2;
+            }
         }
         return opt;
     },
 
+    // 添加地点标记
     addPlaceMark: function(point, title, opt){
         var baseImg = 'assets/images/';
         var suffix = '.png';
-        var markImg = ['icon_nav_start','icon_navi_poi_toilet','icon_navi_poi_parking'];
+        var markImg = ['start_markers','via_markers','end_markers','same_markers'];
         var iconUrl = baseImg + markImg[opt] + suffix;
 
         var marker = new BMap.Marker(point, {
@@ -372,11 +469,23 @@ TravelRoute.Map = {
         var txtMenuItem = [
             {
                 text:'设为起点',
-                callback:function(){}
+                callback:function(){
+
+                }
             },
             {
                 text:'设为终点',
-                callback:function(){map.zoomOut()}
+                callback:function(){
+
+                }
+            },
+            {
+                text:'公交查询',
+                callback:function(p){
+                    var marker = new BMap.Marker(p);
+                    self.map.addOverlay(marker);
+                    self.addTransitSearch(marker);
+                }
             }
         ];
 
@@ -389,25 +498,12 @@ TravelRoute.Map = {
 
     },
 
+    // 添加路径
     addRoute: function(path){
         this.map.addOverlay(new BMap.Polyline(path, {
             strokeColor: '#333',
             enableClicking: false
         }));
-    },
-
-    // 获取输入框的内容
-    getInputContent: function(){
-        // 获取输入框的内容
-        var searchText = $('.searchText');
-        var len = searchText.length;
-        var i = 0;
-        var arrContent = [];
-        for( ; i<len; i++){
-            arrContent.push($(searchText[i]).val());
-        }
-        console.log(arrContent);
-        return arrContent;
     },
 
     // 添加右键菜单
@@ -434,9 +530,11 @@ TravelRoute.Map = {
             {
                 text:'在此添加标注',
                 callback:function(p){
-                    var marker = new BMap.Marker(p),
-                        px = self.map.pointToPixel(p);
+                    var marker = new BMap.Marker(p);
                     self.map.addOverlay(marker);
+
+
+
                 }
             },
             {
@@ -446,22 +544,31 @@ TravelRoute.Map = {
                     var marker = new BMap.Marker(p);
                     var infoWindow = new BMap.InfoWindow($tplContent);  // 创建信息窗口对象
                     self.map.addOverlay(marker);
-                    marker.addEventListener("click", function(){
-                        this.openInfoWindow(infoWindow);
-                        $('.t_window_search_btn').click(function(){
-                           var searchVal = $(this).prev().val();
-                           self.searchInBounds(searchVal);
-                        });
-                        $('.t_window_main_item ul li').click(function(){
-                             var $searchItem = $(this).parents('.t_window_main_item').next();
-                             $searchItem.children('.t_window_nearby_input').val($(this).text());
-                             $searchItem.children('.t_window_search_btn').trigger('click');
-                        });
+                    marker.openInfoWindow(infoWindow);
+                    infoWindow.setWidth(150);
+                    infoWindow.setHeight(150);
+                    $('.t_window_search_btn').click(function(){
+                       var searchVal = $(this).prev().val();
+                       self.searchInBounds(searchVal);
                     });
+                    $('.t_window_main_item ul li').click(function(){
+                         var $searchItem = $(this).parents('.t_window_main_item').next();
+                         $searchItem.children('.t_window_nearby_input').val($(this).text());
+                         $searchItem.children('.t_window_search_btn').trigger('click');
+                    });
+
                 }
             },
             {
-                text:'清除标记',
+                text:'公交查询',
+                callback: function(p){
+                    var marker = new BMap.Marker(p);
+                    self.map.addOverlay(marker);
+                    self.addTransitSearch(marker);
+                }
+            },
+            {
+                text:'清除标注',
                 callback:function(){
                     self.map.clearOverlays();
                 }
@@ -471,7 +578,7 @@ TravelRoute.Map = {
 
         for(var i=0; i < txtMenuItem.length; i++){
             contextMenu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
-            if(i==1 || i==3) {
+            if(i==1 || i==3 || i==6) {
                 contextMenu.addSeparator();
             }
         }
@@ -495,6 +602,9 @@ TravelRoute.Map = {
     // 运行时对DOM的修改
     runChange: function(){
         var self = this;
+
+        // 初始化popup
+        $('#my_popup').popup();
 
         // 搜索提示
         self.doSearchSuggest();
@@ -525,8 +635,12 @@ TravelRoute.Map = {
                 var $tpl = self.util.getTemplate("view", "placeItem", obj);
                 $("#t_place_area").append($tpl);
                 $('#t_search_input').val("");
+            }else{
+                $('#my_popup').find('.popup_container').children().html("景点不能为空");
+                $('#my_popup').popup('show');
+                return false;
             }
-            return false;
+
         });
         //按回车键的时候，触发点击添加按钮的操作
         $('#t_search_input').keyup(function(e){
@@ -540,9 +654,12 @@ TravelRoute.Map = {
         });
         // 多个地点查询
         $('#t_btnSearch').click(function(){
+			$('#t_suggest_results').html("");
+            // 驾车方案查询
             var liLen = $('#t_place_area').children('li').length;
             if(liLen<2){
-                alert("请添加多个地点。。。");
+                $('#my_popup').find('.popup_container').children().html("目标景点不能少于2个，请再添加几个地点");
+                $('#my_popup').popup('show');
                 return false;
             }else{
                 var $ulPlaces = $('#t_place_area');
@@ -552,6 +669,7 @@ TravelRoute.Map = {
                     var place = $($liItem[i]).find('.t_place_item_content').text();
                     arrPlaces.push(place);
                 }
+                self.placeArr = arrPlaces;
                 var $resultsOpt = $("#t_search_results").children('.t_search_results_opt');
                 if($resultsOpt.children('ul').length == 0){
                     var $tpl = self.util.getTemplate("view", "strategyOpt");
@@ -560,14 +678,19 @@ TravelRoute.Map = {
                 $('#t_search_results').children('.t_search_results_panel').children('ul').html("");
                 self.searchWaitInfo(0);
                 self.selStrategyDrive(arrPlaces, curStrategy);
+
             }
+
+            // 公共交通方案查询
+
+
         });
 
         // Toggle Class
         $('#t_search_results').on('click', '.t_results_item',function(){
             var item = $(this).attr('item');
             $(this).siblings('.t_route_description[item='+item+']').toggle();
-            $(this).children('div').toggleClass('t_results_item_icon_down');
+            $(this).children('.t_results_item_icon').toggleClass('t_results_item_icon_down');
         });
 
 
@@ -583,6 +706,7 @@ TravelRoute.Map = {
         // 添加起点标记
         $('#t_place_area').on('click', '.t_place_item_start', function(){
             var $item = $(this).parents('.t_place_item');
+            var $itemHeader = $item.children('.t_place_item_header');
             var $content = $item.find('.t_place_item_content');
             var $type = $item.find('.t_place_item_type');
             var contentText = $content.text();
@@ -590,9 +714,11 @@ TravelRoute.Map = {
             if($type.attr('type') == 2){
                 $type.html("起点、终点：");
                 $type.attr('type', 3);
+                self.addPlaceTypeStyle($itemHeader, 3);
             }else{
                 $type.html("起点：");
                 $type.attr('type', 1);
+                self.addPlaceTypeStyle($itemHeader, 1);
             }
             $content.html(contentText);
             $(this).attr('disabled', 'disabled');
@@ -601,12 +727,15 @@ TravelRoute.Map = {
             var siblingsTypeLen = $siblingsType.length;
             for(var i=0; i< siblingsTypeLen; i++){
                 var iType = $siblingsType.eq(i).attr('type');
+                var $sHeader = $siblingsType.eq(i).parents(".t_place_item_header");
                 if(iType==1){
                     $siblingsType.eq(i).attr('type', 0);
                     $siblingsItem.find('.t_place_item_type').eq(i).html("");
+                    self.addPlaceTypeStyle($sHeader, 0);
                 }else if(iType==3){
                     $siblingsType.eq(i).attr('type', 2);
                     $siblingsItem.find('.t_place_item_type').eq(i).html("终点：");
+                    self.addPlaceTypeStyle($sHeader, 2);
                 }
 
             }
@@ -615,6 +744,7 @@ TravelRoute.Map = {
         // 添加终点标记
         $('#t_place_area').on('click', '.t_place_item_end', function(){
             var $item = $(this).parents('.t_place_item');
+            var $itemHeader = $item.children('.t_place_item_header');
             var $content = $item.find('.t_place_item_content');
             var $type = $item.find('.t_place_item_type');
             var contentText = $content.text();
@@ -622,9 +752,11 @@ TravelRoute.Map = {
             if($type.attr('type') == 1){
                 $type.html("起点、终点：");
                 $type.attr('type', 3);
+                self.addPlaceTypeStyle($itemHeader, 3);
             }else{
                 $type.html("终点：");
                 $type.attr('type', 2);
+                self.addPlaceTypeStyle($itemHeader, 2);
             }
             $content.html(contentText);
             $(this).attr('disabled', 'disabled');
@@ -633,20 +765,133 @@ TravelRoute.Map = {
             var siblingsTypeLen = $siblingsType.length;
             for(var i=0; i< siblingsTypeLen; i++){
                 var iType = $siblingsType.eq(i).attr('type');
+                var $sHeader = $siblingsType.eq(i).parents(".t_place_item_header");
                 if(iType==2){
                     $siblingsType.eq(i).attr('type', 0);
                     $siblingsItem.find('.t_place_item_type').eq(i).html("");
+                    self.addPlaceTypeStyle($sHeader, 0);
                 }else if(iType==3){
                     $siblingsType.eq(i).attr('type', 1);
                     $siblingsItem.find('.t_place_item_type').eq(i).html("起点：");
+                    self.addPlaceTypeStyle($sHeader, 1);
                 }
 
             }
             $siblingsItem.find('.t_place_item_end').removeAttr('disabled');
         });
 
+        // 关闭弹出层
+        $('#my_popup').on('click', '.popup_close', function(){
+            $('#my_popup').find('.popup_container').children().html("");
+            $('#my_popup').popup('hide');
+        });
+        // 确定
+        $('#my_popup').on('click', '.popup_button_sure', function(){
+            var len = $('#t_place_area').children('li').length;
+            $('#t_place_area').children('li').eq(len-1).find('.t_place_item_content').html(self.choosePlace);
+            $('#t_suggest_results').html("");
+            $('#my_popup').find('.popup_button').hide();
+            $('#my_popup').popup('hide');
+        });
+        // 取消
+        $('#my_popup').on('click', '.popup_button_cancel', function(){
+            $('.popup_close').trigger('click');
+        });
     },
 
+    // 添加地点样式
+    addPlaceTypeStyle: function(jqObj, type){
+        switch(type){
+            case 0:
+                jqObj.removeClass('t_add_start_style');
+                jqObj.removeClass('t_add_end_style');
+                jqObj.removeClass('t_add_start_end_style');
+                jqObj.addClass('t_add_normal_style');
+                break;
+            case 1:
+                jqObj.removeClass('t_add_normal_style');
+                jqObj.removeClass('t_add_end_style');
+                jqObj.removeClass('t_add_start_end_style');
+                jqObj.addClass('t_add_start_style');
+                break;
+            case 2:
+                jqObj.removeClass('t_add_normal_style');
+                jqObj.removeClass('t_add_start_style');
+                jqObj.removeClass('t_add_start_end_style');
+                jqObj.addClass('t_add_end_style');
+                break;
+            case 3:
+                jqObj.removeClass('t_add_normal_style');
+                jqObj.removeClass('t_add_start_style');
+                jqObj.removeClass('t_add_end_style');
+                jqObj.addClass('t_add_start_end_style');
+                break;
+        }
+    },
+
+    // 在百度地图上添加公交查询
+    addTransitSearch: function(marker){
+        var self = this;
+        // 获取目的地，并添加进入到选项中去
+        var placeArr = [];
+        var placeLen = $('#t_place_area').children('li').length;
+        for(var i=0; i<placeLen; i++){
+            var place = $('#t_place_area').children('li:eq('+i+')').find('.t_place_item_content').text();
+            placeArr.push(place);
+        }
+        var obj = {};
+        obj.place = placeArr;
+        var $tplContent = self.util.getTemplate("view", "searchPtRoute", obj);
+        var infoWindow = new BMap.InfoWindow($tplContent);  // 创建信息窗口对象
+        var opts = {width: 300, height: 500};
+        marker.openInfoWindow(infoWindow, opts);
+
+        // 添加公交路线，链接到百度地图中去
+        $('.outset_but').click(function(){
+            var type = $(this).attr('data-type');
+            var $mode = $("input[name=mode]");
+
+            // 得到起点、终点
+            var selOrigin = $('.t_select_origin').val();
+            var selDestination = $('.t_select_destination').val();
+            if(selOrigin!="" && selDestination!=""){
+                // 获取起点终点所在的城市
+                self.getCityByKeyWords(selOrigin, function(originCity){
+                    self.getCityByKeyWords(selDestination, function(destinationCity){
+                        var $inputArea = $('.t_window_input_area');
+                        $inputArea.children('input[name=origin]').val(selOrigin);
+                        $inputArea.children('input[name=destination]').val(selDestination);
+                        $inputArea.children('input[name=origin_region]').val(originCity);
+                        $inputArea.children('input[name=destination_region]').val(destinationCity);
+                        if(type==1){
+                            $mode.val("transit");
+                            $('#redirectBaiduForm')[0].submit();
+                        }else if(type==2){
+                            $mode.val("driving");
+                            $('#redirectBaiduForm')[0].submit();
+                        }
+                    });
+                });
+            }else{
+                $('#my_popup').find('.popup_container').children().html("起点或终点不能为空");
+                $('#my_popup').popup('show');
+            }
+        });
+    },
+    // 标签覆盖物是否添加
+    isMarkIconAdded: function(place){
+        var tmpArr = this.tmpArr;
+        if(tmpArr.length>0){
+            for(var i in tmpArr){
+                if(place==tmpArr[i]){
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+
+    // 用例测试旅行路径规划算法
     addDemo: function(){
         var arrayEdge = new Array();
         arrayEdge.push(new Edge("A","B",96));

@@ -27,8 +27,8 @@
     <div id="t_content">
         <div id="t_content_zone">
             <div class="t_search_add">
-                <input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/>
-                <input type="button" id="t_place_add_btn" value="添加" />
+                <div><input type="text" placeholder="请输入地名" id="t_search_input" size="40px"/></div>
+                <div><input type="button" id="t_place_add_btn" value="添加" /></div>
             </div>
             <div id="t_place_panel">
                 <ul id="t_place_area">
@@ -38,7 +38,7 @@
             <div id="t_suggest_results">
             </div>
             <div id="t_search">
-                <input id="t_btnSearch" type="button" value="搜索" />
+                <input id="t_btnSearch" type="button" value="搜索路径" />
             </div>
             <div id="t_search_results">
                 <div class="t_search_results_opt">
@@ -57,6 +57,17 @@
     <div id="t_map_container"></div>
 </div>
 <div id="t_progress_info">
+</div>
+<div id="my_popup">
+    <div class="popup_header">
+        <div class="popup_title">提醒</div>
+        <div class="popup_close">X</div>
+    </div>
+    <div class="popup_container"><div></div></div>
+    <div class="popup_button">
+        <div class="popup_button_sure">确定</div>
+        <div class="popup_button_cancel">取消</div>
+    </div>
 </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=lGv0D1ipAA9UeVtQXsFQpTsU"></script>
 <script type="text/javascript" src="lib/head.min.js"></script>

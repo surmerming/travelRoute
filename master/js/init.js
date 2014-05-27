@@ -40,11 +40,11 @@ TravelRoute.FileLists = {
         // javascript库
         'lib/jquery-2.1.0.min.js',
         'lib/underscore.js',
+        'lib/jquery.popupoverlay.js',
 
         //自定义js
         'master/js/util.js',            //工具包
         'master/js/map.js',             //地图控制
-        'master/js/renderControl.js',   //视图呈现控制
         'master/js/calc.js'             //算法计算
         /*==============================*/
     ]

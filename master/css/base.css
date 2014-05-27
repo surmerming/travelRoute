@@ -6,10 +6,6 @@ html,body{
      height: 100%;
  }
 
-body{
-
-}
-
 ul,li{
     list-style: none;
     text-decoration: none;
@@ -18,5 +14,14 @@ ul,li{
 a{
     text-decoration: none;
     color: #ffffff;
+}
+
+input,button{
+    font-family: "微软雅黑",Helvetica,Tahoma,Arial,"Microsoft YaHei",SimSun,"宋体",Heiti,"黑体",sans-serif;
+    font-size: 12px;
+}
+
+input[type="button"]{
+    cursor: pointer;
 }
 

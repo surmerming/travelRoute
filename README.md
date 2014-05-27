@@ -71,6 +71,8 @@
 
 　　关于： 对本项目的初略说明
 
+$('#t_suggest_results').find('li').eq(0).find('div').eq(0).find('span').eq(0).text()
+
  
 
 　　　　

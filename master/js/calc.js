@@ -204,7 +204,7 @@ TravelRoute.Calc = {
                 // 获取除起点终点外的那个孤立点
                 var isolatePoint = self.getIsolatePoint(zeroDegreeArr);
 
-                if(!self._trBSameOnStartEnd && nodeList.length==3){
+                if(nodeList.length==3){
                     var edgeVal1 = self.getEdgeVal(isolatePoint, self._trStart);
                     var edgeVal2 = self.getEdgeVal(isolatePoint, self._trEnd);
                     var edgeItem1 = {

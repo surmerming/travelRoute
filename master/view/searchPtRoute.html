@@ -1,0 +1,33 @@
+<form id="redirectBaiduForm" action="http://api.map.baidu.com/direction" target="_blank" method="get">
+    <h3 class="t_window_header"><span class="t_window_header_title">公交查询</span></h3>
+    <div class="t_window_main">
+        <div class="t_window_select_area">
+            <div class="t_area_select_origin">
+                <span>选择起点：</span>
+                <select name="t_select_origin" class="t_select_origin t_select_style">
+                    <% _.each(place, function(item){ %>
+                        <option value='<%=item%>'><%=item%></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="t_area_select_destination">
+                <span>选择终点：</span>
+                <select name="t_select_destination" class="t_select_destination t_select_style">
+                    <% _.each(place, function(item){ %>
+                    <option value='<%=item%>'><%=item%></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="t_window_input_area">
+            <input type="button" name="bus" value="公交" class="outset_but" data-type="1"/>
+            <input type="button" name="driving" value="驾车" class="outset_but" data-type="2"/>
+            <input type="hidden" value="html" name="output" />
+            <input type="hidden" value="driving" name="mode" />
+            <input type="hidden" value="" name="origin_region" class="outset" />
+            <input type="hidden" value="" name="origin" class="outset" />
+            <input type="hidden" value="" name="destination_region" />
+            <input type="hidden" value="" name="destination" class="outset" />
+        </div>
+    </div>
+</form>
